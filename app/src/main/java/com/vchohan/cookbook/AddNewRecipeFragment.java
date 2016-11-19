@@ -36,7 +36,7 @@ public class AddNewRecipeFragment extends Fragment {
 
     private static LinearLayout recipeImageViewContainer;
 
-    private ImageView recipeImageView;
+    private static ImageView recipeImage;
 
     private static Button recipeSaveButton;
 
@@ -78,6 +78,7 @@ public class AddNewRecipeFragment extends Fragment {
     }
 
     private void initializeView(final View rootView) {
+
         recipeImageViewContainer = (LinearLayout) rootView.findViewById(R.id.recipe_image_view_container);
         recipeImageViewContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +97,7 @@ public class AddNewRecipeFragment extends Fragment {
             }
         });
 
-        recipeImageView = (ImageView) rootView.findViewById(R.id.recipe_image_view);
+        recipeImage = (ImageView) rootView.findViewById(R.id.recipe_image);
 
         recipeTitle = (EditText) rootView.findViewById(R.id.recipe_title);
         recipeIngredients = (EditText) rootView.findViewById(R.id.recipe_ingredients);
@@ -124,17 +125,21 @@ public class AddNewRecipeFragment extends Fragment {
             recipeViewerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             // passing string value to another activity
             if (recipeViewerIntent != null) {
+
                 String keyTitle = "Title";
+                //TODO: implement recipe image
                 String keyIngredients = "Ingredients";
                 String keyMethod = "Method";
                 String keyNotes = "Notes";
 
                 String valueTitle = recipeTitle.getText().toString();
+                //TODO: implement recipe image
                 String valueIngredients = recipeIngredients.getText().toString();
                 String valueMethod = recipeMethod.getText().toString();
                 String valueNotes = recipeNotes.getText().toString();
 
                 recipeViewerIntent.putExtra(keyTitle, valueTitle);
+                //TODO: implement recipe image
                 recipeViewerIntent.putExtra(keyIngredients, valueIngredients);
                 recipeViewerIntent.putExtra(keyMethod, valueMethod);
                 recipeViewerIntent.putExtra(keyNotes, valueNotes);
@@ -160,7 +165,7 @@ public class AddNewRecipeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
-                recipeImageView.setImageURI(file);
+                recipeImage.setImageURI(file);
             }
         }
     }

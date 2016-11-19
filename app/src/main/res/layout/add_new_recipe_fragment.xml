@@ -20,16 +20,15 @@
                     android:id="@+id/recipe_image_view_container"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="200dp"
                     android:layout_margin="10dp"
-                    android:background="#fafa"
                     android:gravity="center">
 
                 <ImageView
-                        android:id="@+id/recipe_image_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_menu_camera" />
+                        android:id="@+id/recipe_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY" />
 
             </LinearLayout>
 

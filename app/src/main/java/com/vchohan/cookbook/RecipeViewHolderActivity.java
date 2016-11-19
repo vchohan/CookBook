@@ -6,9 +6,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class RecipeViewHolderActivity extends AppCompatActivity {
+
+    private static ImageView recipeImageView;
 
     private static TextView recipeViewIngredients;
 
@@ -20,6 +23,8 @@ public class RecipeViewHolderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_view_holder_activity);
+
+        recipeImageView = (ImageView) findViewById(R.id.recipe_image_view);
 
         recipeViewIngredients = (TextView) findViewById(R.id.recipe_view_ingredients);
         recipeViewMethod = (TextView) findViewById(R.id.recipe_view_method);
@@ -33,6 +38,9 @@ public class RecipeViewHolderActivity extends AppCompatActivity {
             String keyTitle = "Title";
             String valueTitle = extras.getString(keyTitle);
             toolbar.setTitle(valueTitle);
+
+            // set recipe image here
+            //TODO: implement recipe image
 
             //set recipe ingredients here.
             String keyIngredients = "Ingredients";
