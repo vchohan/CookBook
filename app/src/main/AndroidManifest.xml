@@ -2,12 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="com.vchohan.cookbook">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
         <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name"
@@ -18,10 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
                 android:name=".AddNewRecipeActivity"
                 android:label="@string/add_new_recipe_title"
                 android:parentActivityName=".MainActivity" />
+
         <activity
                 android:name=".RecipeViewHolderActivity"
                 android:parentActivityName=".MainActivity"
@@ -30,6 +36,7 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.vchohan.cookbook.MainActivity" />
         </activity>
+
     </application>
 
 </manifest>

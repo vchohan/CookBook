@@ -6,21 +6,48 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 public class RecipeViewHolderActivity extends AppCompatActivity {
+
+    private static TextView recipeViewIngredients;
+
+    private static TextView recipeViewMethod;
+
+    private static TextView recipeViewNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_view_holder_activity);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        //set recipe titles here.
+        recipeViewIngredients = (TextView) findViewById(R.id.recipe_view_ingredients);
+        recipeViewMethod = (TextView) findViewById(R.id.recipe_view_method);
+        recipeViewNotes = (TextView) findViewById(R.id.recipe_view_notes);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         Bundle extras = getIntent().getExtras();
+
         if (extras != null) {
-            String key = "myKeyId";
-            String value = extras.getString(key);
-            toolbar.setTitle(value);
+            //set recipe title here.
+            String keyTitle = "Title";
+            String valueTitle = extras.getString(keyTitle);
+            toolbar.setTitle(valueTitle);
+
+            //set recipe ingredients here.
+            String keyIngredients = "Ingredients";
+            String valueIngredients = extras.getString(keyIngredients);
+            recipeViewIngredients.setText(valueIngredients);
+
+            //set recipe titles here.
+            String keyMethod = "Method";
+            String valueMethod = extras.getString(keyMethod);
+            recipeViewMethod.setText(valueMethod);
+
+            //set recipe titles here.
+            String keyNotes = "Notes";
+            String valueNotes = extras.getString(keyNotes);
+            recipeViewNotes.setText(valueNotes);
         }
 
         setSupportActionBar(toolbar);
