@@ -2,6 +2,7 @@ package com.vchohan.cookbook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,14 @@ public class AddNewRecipeFragment extends Fragment {
 
     private static Button recipeSaveButton;
 
-    EditText recipeTitleEditText;
+    private static EditText recipeTitle;
+
+    private static EditText recipeIngredients;
+
+    private static EditText recipeMethod;
+
+    private static EditText recipeNotes;
+
 
     /**
      * The fragment argument representing the section number for this
@@ -49,28 +57,36 @@ public class AddNewRecipeFragment extends Fragment {
         return rootView;
     }
 
-    private void initializeView(View rootView) {
+    private void initializeView(final View rootView) {
 
-        recipeTitleEditText = (EditText) rootView.findViewById(R.id.recipe_title);
-
+        recipeTitle = (EditText) rootView.findViewById(R.id.recipe_title);
+        recipeIngredients = (EditText) rootView.findViewById(R.id.recipe_ingredients);
+        recipeMethod = (EditText) rootView.findViewById(R.id.recipe_method);
+        recipeNotes = (EditText) rootView.findViewById(R.id.recipe_notes);
 
         recipeSaveButton = (Button) rootView.findViewById(R.id.save_button);
         recipeSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String recipeSaved = getString(R.string.recipe_saved);
-                Toast.makeText(getContext(), recipeSaved, Toast.LENGTH_SHORT).show();
-
-                Intent recipeViewerIntent = new Intent(getContext(), RecipeViewHolderActivity.class);
-                recipeViewerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                if (recipeViewerIntent != null) {
-                    String key = "myKeyId";
-                    String value = recipeTitleEditText.getText().toString();
-                    recipeViewerIntent.putExtra(key, value);
+                if (recipeTitle.getText().toString().trim().length() == 0 &&
+                    recipeIngredients.getText().toString().trim().length() == 0 &&
+                    recipeMethod.getText().toString().trim().length() == 0) {
+                    String errorText = "Please enter your recipe Title, Ingredients and Method";
+                    Snackbar.make(rootView, errorText, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                } else {
+                    Intent recipeViewerIntent = new Intent(getContext(), RecipeViewHolderActivity.class);
+                    recipeViewerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    // passing string value to another activity
+                    if (recipeViewerIntent != null) {
+                        String key = "myKeyId";
+                        String value = recipeTitle.getText().toString();
+                        recipeViewerIntent.putExtra(key, value);
+                        startActivity(recipeViewerIntent);
+                    }
+                    String recipeSaved = getString(R.string.recipe_saved);
+                    Toast.makeText(getContext(), recipeSaved, Toast.LENGTH_SHORT).show();
                 }
-
-                startActivity(recipeViewerIntent);
             }
         });
     }

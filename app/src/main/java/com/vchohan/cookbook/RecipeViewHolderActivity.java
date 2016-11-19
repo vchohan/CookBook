@@ -9,8 +9,6 @@ import android.view.View;
 
 public class RecipeViewHolderActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +21,6 @@ public class RecipeViewHolderActivity extends AppCompatActivity {
             String key = "myKeyId";
             String value = extras.getString(key);
             toolbar.setTitle(value);
-        } else {
-            toolbar.setTitle("Name your Recipe");
         }
 
         setSupportActionBar(toolbar);
