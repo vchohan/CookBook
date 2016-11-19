@@ -9,11 +9,24 @@ import android.view.View;
 
 public class RecipeViewHolderActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_view_holder_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        //set recipe titles here.
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String key = "myKeyId";
+            String value = extras.getString(key);
+            toolbar.setTitle(value);
+        } else {
+            toolbar.setTitle("Name your Recipe");
+        }
+
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

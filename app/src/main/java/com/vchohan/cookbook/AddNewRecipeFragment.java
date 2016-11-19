@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 /**
@@ -17,6 +18,8 @@ public class AddNewRecipeFragment extends Fragment {
     public static final String TAG = AddNewRecipeFragment.class.getSimpleName();
 
     private static Button recipeSaveButton;
+
+    EditText recipeTitleEditText;
 
     /**
      * The fragment argument representing the section number for this
@@ -47,6 +50,10 @@ public class AddNewRecipeFragment extends Fragment {
     }
 
     private void initializeView(View rootView) {
+
+        recipeTitleEditText = (EditText) rootView.findViewById(R.id.recipe_title);
+
+
         recipeSaveButton = (Button) rootView.findViewById(R.id.save_button);
         recipeSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +61,16 @@ public class AddNewRecipeFragment extends Fragment {
                 String recipeSaved = getString(R.string.recipe_saved);
                 Toast.makeText(getContext(), recipeSaved, Toast.LENGTH_SHORT).show();
 
-                Intent 
+                Intent recipeViewerIntent = new Intent(getContext(), RecipeViewHolderActivity.class);
+                recipeViewerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                if (recipeViewerIntent != null) {
+                    String key = "myKeyId";
+                    String value = recipeTitleEditText.getText().toString();
+                    recipeViewerIntent.putExtra(key, value);
+                }
+
+                startActivity(recipeViewerIntent);
             }
         });
     }

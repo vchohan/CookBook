@@ -24,7 +24,6 @@
                 android:parentActivityName=".MainActivity" />
         <activity
                 android:name=".RecipeViewHolderActivity"
-                android:label="@string/title_activity_recipe_view_holder"
                 android:parentActivityName=".MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
