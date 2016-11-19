@@ -1,23 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
         android:id="@+id/fragment_add_new_recipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.vchohan.cookbook.AddNewRecipeActivity">
 
+    <LinearLayout
+            android:id="@+id/recipe_input_container"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <EditText
-            android:id="@+id/recipe_title"
-            android:layout_width="wrap_content"
+        <EditText
+                android:id="@+id/recipe_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="text"
+                android:hint="Enter Recipe Title"
+                android:ems="10"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="21dp" />
+
+        <EditText
+                android:id="@+id/recipe_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="text"
+                android:hint="Enter Recipe Ingredients"
+                android:ems="10"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="21dp" />
+
+        <EditText
+                android:id="@+id/recipe_method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="text"
+                android:hint="Enter Recipe Method"
+                android:ems="10"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="21dp" />
+
+        <EditText
+                android:id="@+id/recipe_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="text"
+                android:hint="Enter Recipe Notes"
+                android:ems="10"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="21dp" />
+
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/save_button"
+            android:text="SAVE"
+            android:gravity="center"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="Enter Recipe Title"
-            android:ems="10"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="21dp" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
 
 
-</LinearLayout>
+</RelativeLayout>
