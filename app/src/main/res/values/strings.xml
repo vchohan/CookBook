@@ -4,6 +4,7 @@
 
     <!--page title-->
     <string name="add_new_recipe_title">ADD A NEW RECIPE</string>
+    <string name="lunch_recipes_title">LUNCH RECIPES</string>
 
     <!--drawer strings-->
     <string name="navigation_drawer_open">Open navigation drawer</string>

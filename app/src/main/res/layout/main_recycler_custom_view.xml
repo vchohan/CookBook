@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one_fifty_density_pixel"
+        card_view:cardCornerRadius="@dimen/five_density_pixel"
+        card_view:cardMaxElevation="@dimen/five_density_pixel"
+        card_view:cardElevation="@dimen/five_density_pixel"
+        card_view:contentPadding="@dimen/five_density_pixel"
+        android:layout_marginTop="@dimen/ten_density_pixel"
+        android:layout_marginLeft="@dimen/ten_density_pixel"
+        android:layout_marginRight="@dimen/ten_density_pixel"
+        card_view:cardBackgroundColor="@color/colorBlueGrey100">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:id="@+id/recycler_card_view"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/five_density_pixel"
+                android:weightSum="1">
+
+            <TextView
+                    android:id="@+id/recipe_title_header"
+                    android:layout_width="@dimen/two_hundred_density_pixel"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_weight="0.96" />
+
+            <ImageButton
+                    android:id="@+id/remove_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_blur_on_black_24dp"
+                    android:background="@android:color/transparent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

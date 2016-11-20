@@ -1,6 +1,7 @@
 <resources>
     <dimen name="one_density_pixel">1dp</dimen>
     <dimen name="two_density_pixel">2dp</dimen>
+    <dimen name="four_density_pixel">4dp</dimen>
     <dimen name="five_density_pixel">5dp</dimen>
     <dimen name="ten_density_pixel">10dp</dimen>
     <dimen name="twenty_density_pixel">20dp</dimen>

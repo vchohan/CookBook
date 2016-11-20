@@ -30,7 +30,7 @@
 
         <activity
                 android:name=".RecyclerViewActivity"
-                android:label="Your Recipes"
+                android:label="@string/lunch_recipes_title"
                 android:parentActivityName=".MainActivity" />
 
         <activity

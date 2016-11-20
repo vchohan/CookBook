@@ -3,6 +3,7 @@ package com.vchohan.cookbook;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -48,14 +49,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        // Get the application context
-        mContext = getApplicationContext();
-
-        // Get the widgets reference from XML layout
-        mLinearLayout = (LinearLayout) findViewById(R.id.recycler_card_view);
-        mButtonAdd = (Button) findViewById(R.id.btn_add);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -79,7 +72,56 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // Initialize a new String array
-        final String[] animals = {
+        final String[] recipes = initializeArray();
+
+        // Intilize an array list from array
+        final List<String> recipeList = new ArrayList(Arrays.asList(recipes));
+
+        initializeRecyclerView(recipeList);
+    }
+
+    private void initializeRecyclerView(final List<String> recipeList) {
+        // Get the application context
+        mContext = getApplicationContext();
+
+        // Get the widgets reference from XML layout
+        mLinearLayout = (LinearLayout) findViewById(R.id.recycler_card_view);
+        mButtonAdd = (Button) findViewById(R.id.btn_add);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        // Define a layout for RecyclerView
+        mLayoutManager = new LinearLayoutManager(mContext);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // Initialize a new instance of RecyclerView Adapter instance
+        mAdapter = new MainRecyclerViewAdapter(mContext, recipeList);
+
+        // Set the adapter for RecyclerView
+        mRecyclerView.setAdapter(mAdapter);
+
+        // Set a click listener for add item button
+        mButtonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Specify the position
+                int position = 0;
+                String itemLabel = "" + mRandom.nextInt(100);
+
+                // Add an item to recipe list
+                recipeList.add(position, "" + itemLabel);
+
+                mAdapter.notifyItemInserted(position);
+
+                mRecyclerView.scrollToPosition(position);
+
+                Toast.makeText(mContext, "Added : " + itemLabel, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @NonNull
+    private String[] initializeArray() {
+        return new String[]{
             "Aardvark",
             "Albatross",
             "Alligator",
@@ -97,38 +139,6 @@ public class MainActivity extends AppCompatActivity
             "Beaver",
             "Bee"
         };
-
-        // Intilize an array list from array
-        final List<String> animalsList = new ArrayList(Arrays.asList(animals));
-
-        // Define a layout for RecyclerView
-        mLayoutManager = new LinearLayoutManager(mContext);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // Initialize a new instance of RecyclerView Adapter instance
-        mAdapter = new RecyclerViewAdapter(mContext, animalsList);
-
-        // Set the adapter for RecyclerView
-        mRecyclerView.setAdapter(mAdapter);
-
-        // Set a click listener for add item button
-        mButtonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Specify the position
-                int position = 0;
-                String itemLabel = "" + mRandom.nextInt(100);
-
-                // Add an item to animals list
-                animalsList.add(position, "" + itemLabel);
-
-                mAdapter.notifyItemInserted(position);
-
-                mRecyclerView.scrollToPosition(position);
-
-                Toast.makeText(mContext, "Added : " + itemLabel, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
