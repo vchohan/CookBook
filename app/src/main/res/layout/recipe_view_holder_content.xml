@@ -4,11 +4,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ImageView
-            android:id="@+id/recipe_image_view"
+    <LinearLayout
+            android:id="@+id/recipe_image_view_container"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:background="@drawable/border_view">
+
+        <ImageView
+                android:id="@+id/recipe_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+    </LinearLayout>
 
     <TextView
             android:id="@+id/recipe_view_ingredients"
