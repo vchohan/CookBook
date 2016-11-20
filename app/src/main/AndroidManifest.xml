@@ -29,6 +29,11 @@
                 android:parentActivityName=".MainActivity" />
 
         <activity
+                android:name=".RecyclerViewActivity"
+                android:label="Your Recipes"
+                android:parentActivityName=".MainActivity" />
+
+        <activity
                 android:name=".RecipeViewHolderActivity"
                 android:parentActivityName=".MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">

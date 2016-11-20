@@ -1,5 +1,6 @@
 package com.vchohan.cookbook;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,20 +9,53 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
+    private Context mContext;
+
+    LinearLayout mLinearLayout;
+
+    private RecyclerView mRecyclerView;
+
+    private Button mButtonAdd;
+
+    private RecyclerView.Adapter mAdapter;
+
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    private Random mRandom = new Random();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        // Get the application context
+        mContext = getApplicationContext();
+
+        // Get the widgets reference from XML layout
+        mLinearLayout = (LinearLayout) findViewById(R.id.recycler_card_view);
+        mButtonAdd = (Button) findViewById(R.id.btn_add);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -43,6 +77,58 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Initialize a new String array
+        final String[] animals = {
+            "Aardvark",
+            "Albatross",
+            "Alligator",
+            "Alpaca",
+            "Ant",
+            "Anteater",
+            "Antelope",
+            "Ape",
+            "Armadillo",
+            "Donkey",
+            "Baboon",
+            "Badger",
+            "Barracuda",
+            "Bear",
+            "Beaver",
+            "Bee"
+        };
+
+        // Intilize an array list from array
+        final List<String> animalsList = new ArrayList(Arrays.asList(animals));
+
+        // Define a layout for RecyclerView
+        mLayoutManager = new LinearLayoutManager(mContext);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // Initialize a new instance of RecyclerView Adapter instance
+        mAdapter = new RecyclerViewAdapter(mContext, animalsList);
+
+        // Set the adapter for RecyclerView
+        mRecyclerView.setAdapter(mAdapter);
+
+        // Set a click listener for add item button
+        mButtonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Specify the position
+                int position = 0;
+                String itemLabel = "" + mRandom.nextInt(100);
+
+                // Add an item to animals list
+                animalsList.add(position, "" + itemLabel);
+
+                mAdapter.notifyItemInserted(position);
+
+                mRecyclerView.scrollToPosition(position);
+
+                Toast.makeText(mContext, "Added : " + itemLabel, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -86,6 +172,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            Intent intent = new Intent(this, RecyclerViewActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_slideshow) {
 
