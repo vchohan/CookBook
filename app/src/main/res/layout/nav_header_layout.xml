@@ -2,23 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/nav_header_height"
-        android:background="@drawable/side_nav_bar"
+        android:layout_height="@dimen/two_hundred_density_pixel"
+        android:background="@drawable/border_view"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:orientation="vertical"
-        android:gravity="bottom">
+        android:gravity="center">
 
     <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/nav_header_height"
-            app:srcCompat="@drawable/app_icon"
-            android:id="@+id/imageView" />
-
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/drawer_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:layout_height="@dimen/one_fifty_density_pixel"
+            app:srcCompat="@drawable/app_icon" />
 
 </LinearLayout>

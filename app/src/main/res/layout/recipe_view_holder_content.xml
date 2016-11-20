@@ -14,18 +14,18 @@
             android:id="@+id/recipe_view_ingredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin" />
+            android:layout_margin="@dimen/twenty_density_pixel" />
 
     <TextView
             android:id="@+id/recipe_view_method"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin" />
+            android:layout_margin="@dimen/twenty_density_pixel" />
 
     <TextView
             android:id="@+id/recipe_view_notes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin" />
+            android:layout_margin="@dimen/twenty_density_pixel" />
 
 </LinearLayout>
