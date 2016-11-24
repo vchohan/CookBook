@@ -1,5 +1,8 @@
 package com.vchohan.cookbook;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -39,8 +42,6 @@ public class AddNewRecipeFragment extends Fragment {
 
     private static ImageView recipeImage;
 
-    private static Button recipeSaveButton;
-
     private static EditText recipeTitle;
 
     private static EditText recipeIngredients;
@@ -48,6 +49,8 @@ public class AddNewRecipeFragment extends Fragment {
     private static EditText recipeMethod;
 
     private static EditText recipeNotes;
+
+    private static Button recipeSaveButton;
 
     private static final int REQUEST_CAMERA = 0;
 
@@ -85,24 +88,12 @@ public class AddNewRecipeFragment extends Fragment {
     }
 
     private void initializeView(final View rootView) {
-
         recipeImageViewContainer = (LinearLayout) rootView.findViewById(R.id.recipe_image_view_container);
         recipeImageViewContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //launch camera
                 selectImage();
-
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                file = Uri.fromFile(getOutputMediaFile());
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
-//                startActivityForResult(intent, 100);
-//
-//                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                    recipeImageViewContainer.setEnabled(false);
-//                    ActivityCompat.requestPermissions((Activity) getContext(),
-//                        new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-//                }
             }
         });
 
@@ -147,6 +138,22 @@ public class AddNewRecipeFragment extends Fragment {
                 String valueMethod = recipeMethod.getText().toString();
                 String valueNotes = recipeNotes.getText().toString();
 
+                // send value to the database
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef;
+                myRef = database.getReference(keyTitle);
+                myRef.setValue(valueTitle);
+
+                myRef = database.getReference(keyIngredients);
+                myRef.setValue(valueIngredients);
+
+                myRef = database.getReference(keyMethod);
+                myRef.setValue(valueMethod);
+
+                myRef = database.getReference(keyNotes);
+                myRef.setValue(valueNotes);
+
+                // Here passing the user input values to another activity
                 recipeViewerIntent.putExtra(keyTitle, valueTitle);
                 //TODO: implement recipe image
                 recipeViewerIntent.putExtra(keyIngredients, valueIngredients);
@@ -159,40 +166,6 @@ public class AddNewRecipeFragment extends Fragment {
             Toast.makeText(getContext(), recipeSaved, Toast.LENGTH_SHORT).show();
         }
     }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        if (requestCode == 0) {
-//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-//                && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-//                recipeImageViewContainer.setEnabled(true);
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == 100) {
-//            if (resultCode == RESULT_OK) {
-//                recipeImage.setImageURI(file);
-//            }
-//        }
-//    }
-//
-//    private static File getOutputMediaFile() {
-//        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-//            Environment.DIRECTORY_PICTURES), "CameraDemo");
-//
-//        if (!mediaStorageDir.exists()) {
-//            if (!mediaStorageDir.mkdirs()) {
-//                return null;
-//            }
-//        }
-//
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        return new File(mediaStorageDir.getPath() + File.separator +
-//            "IMG_" + timeStamp + ".jpg");
-//    }
 
     private void selectImage() {
         final CharSequence[] items = {"Take Photo", "Choose from Library",

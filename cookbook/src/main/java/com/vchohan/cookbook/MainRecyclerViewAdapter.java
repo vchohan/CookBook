@@ -36,9 +36,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
         public ViewHolder(View v) {
             super(v);
+            mLinearLayout = (LinearLayout) v.findViewById(R.id.recycler_card_view);
             mTextView = (TextView) v.findViewById(R.id.recipe_title_header);
             mRemoveButton = (ImageButton) v.findViewById(R.id.remove_button);
-            mLinearLayout = (LinearLayout) v.findViewById(R.id.recycler_card_view);
         }
     }
 

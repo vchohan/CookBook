@@ -35,6 +35,11 @@
                 android:parentActivityName=".MainActivity" />
 
         <activity
+                android:name=".FirebaseActivity"
+                android:label="@string/add_new_recipe_title"
+                android:parentActivityName=".MainActivity" />
+
+        <activity
                 android:name=".RecyclerViewActivity"
                 android:label="@string/lunch_recipes_title"
                 android:parentActivityName=".MainActivity" />
