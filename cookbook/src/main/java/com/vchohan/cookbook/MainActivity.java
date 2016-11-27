@@ -1,5 +1,7 @@
 package com.vchohan.cookbook;
 
+import com.google.firebase.database.DatabaseReference;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mLayoutManager;
 
     private Random mRandom = new Random();
+
+    private DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,23 +125,9 @@ public class MainActivity extends AppCompatActivity
 
     @NonNull
     private String[] initializeArray() {
+
         return new String[]{
-            "Aardvark",
-            "Albatross",
-            "Alligator",
-            "Alpaca",
-            "Ant",
-            "Anteater",
-            "Antelope",
-            "Ape",
-            "Armadillo",
-            "Donkey",
-            "Baboon",
-            "Badger",
-            "Barracuda",
-            "Bear",
-            "Beaver",
-            "Bee"
+            // enter here array value
         };
     }
 

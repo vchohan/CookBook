@@ -126,32 +126,39 @@ public class AddNewRecipeFragment extends Fragment {
             // passing string value to another activity
             if (recipeViewerIntent != null) {
 
-                String keyTitle = "Title";
-                //TODO: implement recipe image
-                String keyIngredients = "Ingredients";
-                String keyMethod = "Method";
-                String keyNotes = "Notes";
-
-                String valueTitle = recipeTitle.getText().toString();
-                //TODO: implement recipe image
-                String valueIngredients = recipeIngredients.getText().toString();
-                String valueMethod = recipeMethod.getText().toString();
-                String valueNotes = recipeNotes.getText().toString();
-
                 // send value to the database
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef;
+
+                //set recipe title and write to database
+                String keyTitle = "Title";
+                String valueTitle = recipeTitle.getText().toString();
                 myRef = database.getReference(keyTitle);
                 myRef.setValue(valueTitle);
 
-                myRef = database.getReference(keyIngredients);
-                myRef.setValue(valueIngredients);
+                //set recipe image and write to database
+                //TODO: implement recipe image
 
-                myRef = database.getReference(keyMethod);
-                myRef.setValue(valueMethod);
+                //set recipe ingredients and write to database
+                String keyIngredients = "Ingredients";
+                String valueIngredients = recipeIngredients.getText().toString();
+                myRef = database.getReference(keyTitle);
+                DatabaseReference childRef = myRef.child(keyIngredients);
+                childRef.setValue(valueIngredients);
 
-                myRef = database.getReference(keyNotes);
-                myRef.setValue(valueNotes);
+                //set recipe method and write to database
+                String keyMethod = "Method";
+                String valueMethod = recipeMethod.getText().toString();
+                myRef = database.getReference(keyTitle);
+                childRef = myRef.child(keyMethod);
+                childRef.setValue(valueMethod);
+
+                //set recipe notes and write to database
+                String keyNotes = "Notes";
+                String valueNotes = recipeNotes.getText().toString();
+                myRef = database.getReference(keyTitle);
+                childRef = myRef.child(keyNotes);
+                childRef.setValue(valueNotes);
 
                 // Here passing the user input values to another activity
                 recipeViewerIntent.putExtra(keyTitle, valueTitle);
@@ -162,6 +169,7 @@ public class AddNewRecipeFragment extends Fragment {
 
                 startActivity(recipeViewerIntent);
             }
+
             String recipeSaved = getString(R.string.recipe_saved);
             Toast.makeText(getContext(), recipeSaved, Toast.LENGTH_SHORT).show();
         }

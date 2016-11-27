@@ -16,7 +16,7 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
         <LinearLayout
                 android:id="@+id/recycler_card_view"
@@ -27,7 +27,7 @@
                 android:weightSum="1">
 
             <TextView
-                    android:id="@+id/recipe_title_header"
+                    android:id="@+id/recycler_recipe_title"
                     android:layout_width="@dimen/two_hundred_density_pixel"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorBlack"
@@ -36,11 +36,28 @@
                     android:layout_weight="0.96" />
 
             <ImageButton
-                    android:id="@+id/remove_button"
+                    android:id="@+id/recycler_remove_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_blur_on_black_24dp"
                     android:background="@android:color/transparent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/recycler_sub_card_view"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/five_density_pixel"
+                android:background="@color/colorWhite"
+                android:weightSum="1">
+
+            <TextView
+                    android:id="@+id/recycler_recipe_method"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="1231123456456465"/>
 
         </LinearLayout>
 
