@@ -19,10 +19,12 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -41,6 +43,8 @@ public class AddNewRecipeFragment extends Fragment {
     private static LinearLayout recipeImageViewContainer;
 
     private static ImageView recipeImage;
+
+    private static Spinner recipeCategory;
 
     private static EditText recipeTitle;
 
@@ -99,6 +103,18 @@ public class AddNewRecipeFragment extends Fragment {
 
         recipeImage = (ImageView) rootView.findViewById(R.id.recipe_image);
 
+        recipeCategory = (Spinner) rootView.findViewById(R.id.recipe_category);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+            R.array.recipe_category_array, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        recipeCategory.setAdapter(adapter);
+
         recipeTitle = (EditText) rootView.findViewById(R.id.recipe_title);
         recipeIngredients = (EditText) rootView.findViewById(R.id.recipe_ingredients);
         recipeMethod = (EditText) rootView.findViewById(R.id.recipe_method);
@@ -131,7 +147,11 @@ public class AddNewRecipeFragment extends Fragment {
                 DatabaseReference myRef;
 
                 //set category for the recipe
-                String keyCategory = "";
+                String keyBreakfastCategory = "Breakfast";
+                String keyLunchCategory = "Lunch";
+                String keySnackCategory = "Snack";
+                String keyDinnerCategory = "Dinner";
+                String DessertCategory = "Dessert";
 
                 //set recipe title and write to database
                 String keyTitle = "Title";
