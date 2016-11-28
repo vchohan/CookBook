@@ -14,12 +14,12 @@
         card_view:cardBackgroundColor="@color/colorBlueGrey100">
 
     <LinearLayout
+            android:id="@+id/recycler_card_view"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         <LinearLayout
-                android:id="@+id/recycler_card_view"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,21 +43,16 @@
                     android:background="@android:color/transparent" />
 
         </LinearLayout>
-
+        
         <LinearLayout
-                android:id="@+id/recycler_sub_card_view"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/five_density_pixel"
-                android:background="@color/colorWhite"
-                android:weightSum="1">
+                android:layout_height="match_parent">
 
             <TextView
-                    android:id="@+id/recycler_recipe_method"
+                    android:id="@+id/recycler_recipe_ingredients"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="1231123456456465"/>
+                    android:layout_height="wrap_content" />
 
         </LinearLayout>
 

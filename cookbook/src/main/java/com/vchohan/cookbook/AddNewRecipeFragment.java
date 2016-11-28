@@ -130,6 +130,9 @@ public class AddNewRecipeFragment extends Fragment {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef;
 
+                //set category for the recipe
+                String keyCategory = "";
+
                 //set recipe title and write to database
                 String keyTitle = "Title";
                 String valueTitle = recipeTitle.getText().toString();
@@ -176,8 +179,7 @@ public class AddNewRecipeFragment extends Fragment {
     }
 
     private void selectImage() {
-        final CharSequence[] items = {"Take Photo", "Choose from Library",
-            "Cancel"};
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Add Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {

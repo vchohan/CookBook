@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class RecipeViewHolderActivity extends AppCompatActivity {
+public class  RecipeViewHolderActivity extends AppCompatActivity {
 
     private static ImageView recipeImageView;
 

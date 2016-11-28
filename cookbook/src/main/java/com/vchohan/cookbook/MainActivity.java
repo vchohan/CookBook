@@ -1,11 +1,14 @@
 package com.vchohan.cookbook;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -74,14 +77,34 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
 
-        // Initialize a new String array
-        final String[] recipes = initializeArray();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Title");
+        DatabaseReference IngredientsRef = myRef.child("Ingredients");
+        IngredientsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String ingredients = dataSnapshot.getValue(String.class);
+                if (ingredients != null) {
+                    // Initialize a new String array
+                    // final String[] recipes = initializeArray();
 
-        // Intilize an array list from array
-        final List<String> recipeList = new ArrayList(Arrays.asList(recipes));
+                    // Intilize an array list from array
+                    final List<String> recipeList = new ArrayList(Arrays.asList(ingredients));
 
-        initializeRecyclerView(recipeList);
+                    initializeRecyclerView(recipeList);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void initializeRecyclerView(final List<String> recipeList) {
@@ -113,23 +136,20 @@ public class MainActivity extends AppCompatActivity
 
                 // Add an item to recipe list
                 recipeList.add(position, "" + itemLabel);
-
                 mAdapter.notifyItemInserted(position);
-
                 mRecyclerView.scrollToPosition(position);
-
                 Toast.makeText(mContext, "Added : " + itemLabel, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    @NonNull
-    private String[] initializeArray() {
-
-        return new String[]{
-            // enter here array value
-        };
-    }
+//    @NonNull
+//    private String[] initializeArray() {
+//
+//        return new String[]{
+//            // enter here array value
+//        };
+//    }
 
     @Override
     public void onBackPressed() {
