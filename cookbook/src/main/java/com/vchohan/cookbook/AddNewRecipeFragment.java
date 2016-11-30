@@ -19,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +37,7 @@ import java.io.IOException;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class AddNewRecipeFragment extends Fragment {
+public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     public static final String TAG = AddNewRecipeFragment.class.getSimpleName();
 
@@ -45,6 +46,8 @@ public class AddNewRecipeFragment extends Fragment {
     private static ImageView recipeImage;
 
     private static Spinner recipeCategory;
+
+    private static String recipeCategoryValue;
 
     private static EditText recipeTitle;
 
@@ -114,6 +117,7 @@ public class AddNewRecipeFragment extends Fragment {
 
         // Apply the adapter to the spinner
         recipeCategory.setAdapter(adapter);
+        recipeCategory.setOnItemSelectedListener(this);
 
         recipeTitle = (EditText) rootView.findViewById(R.id.recipe_title);
         recipeIngredients = (EditText) rootView.findViewById(R.id.recipe_ingredients);
@@ -129,59 +133,63 @@ public class AddNewRecipeFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(position);
+        recipeCategoryValue = recipeCategory.getSelectedItem().toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
     private void getRecipeUserInput(View rootView) {
         if (recipeTitle.getText().toString().trim().length() == 0 &&
             recipeIngredients.getText().toString().trim().length() == 0 &&
             recipeMethod.getText().toString().trim().length() == 0) {
             String errorText = "Please enter your recipe Title, Ingredients and Method";
-            Snackbar.make(rootView, errorText, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+            Snackbar.make(rootView, errorText, Snackbar.LENGTH_LONG).setAction("Action", null).show();
         } else {
             Intent recipeViewerIntent = new Intent(getContext(), RecipeViewHolderActivity.class);
             recipeViewerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
             // passing string value to another activity
             if (recipeViewerIntent != null) {
 
                 // send value to the database
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef;
 
-                //set category for the recipe
-                String keyBreakfastCategory = "Breakfast";
-                String keyLunchCategory = "Lunch";
-                String keySnackCategory = "Snack";
-                String keyDinnerCategory = "Dinner";
-                String DessertCategory = "Dessert";
-
-                //set recipe title and write to database
+                String[] keyMealCategory = getResources().getStringArray(R.array.recipe_category_array);
                 String keyTitle = "Title";
+                String keyIngredients = "Ingredients";
+                String keyMethod = "Method";
+                String keyNotes = "Notes";
+
+                String valueMealCategory = recipeCategoryValue;
                 String valueTitle = recipeTitle.getText().toString();
-                myRef = database.getReference(keyTitle);
-                myRef.setValue(valueTitle);
+                String valueIngredients = recipeIngredients.getText().toString();
+                String valueMethod = recipeMethod.getText().toString();
+                String valueNotes = recipeNotes.getText().toString();
 
                 //set recipe image and write to database
                 //TODO: implement recipe image
 
-                //set recipe ingredients and write to database
-                String keyIngredients = "Ingredients";
-                String valueIngredients = recipeIngredients.getText().toString();
-                myRef = database.getReference(keyTitle);
-                DatabaseReference childRef = myRef.child(keyIngredients);
-                childRef.setValue(valueIngredients);
+                DatabaseReference myRef;
+                myRef = database.getReference(valueMealCategory);
 
-                //set recipe method and write to database
-                String keyMethod = "Method";
-                String valueMethod = recipeMethod.getText().toString();
-                myRef = database.getReference(keyTitle);
-                childRef = myRef.child(keyMethod);
-                childRef.setValue(valueMethod);
+                DatabaseReference childTitle = myRef.child(valueTitle);
+                childTitle.setValue(valueTitle);
 
-                //set recipe notes and write to database
-                String keyNotes = "Notes";
-                String valueNotes = recipeNotes.getText().toString();
-                myRef = database.getReference(keyTitle);
-                childRef = myRef.child(keyNotes);
-                childRef.setValue(valueNotes);
+                DatabaseReference childIngredients = childTitle.child(keyIngredients);
+                childIngredients.setValue(valueIngredients);
+
+                DatabaseReference childMethod = childTitle.child(keyMethod);
+                childMethod.setValue(valueMethod);
+
+                DatabaseReference childNotes = childTitle.child(keyNotes);
+                childNotes.setValue(valueNotes);
 
                 // Here passing the user input values to another activity
                 recipeViewerIntent.putExtra(keyTitle, valueTitle);
