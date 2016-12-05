@@ -202,6 +202,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+            Intent intent = new Intent(this, StorageActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_send) {
             Intent intent = new Intent(this, FirebaseActivity.class);
