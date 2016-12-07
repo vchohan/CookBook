@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 public class StorageActivity extends AppCompatActivity {
 
-    private static final String TAG = "Storage#StorageActivity";
-
     private Button mSelectImage;
 
     private StorageReference mStorage;

@@ -32,14 +32,6 @@
                 android:label="@string/add_new_recipe_title"
                 android:parentActivityName=".MainActivity" />
         <activity
-                android:name=".CameraActivity"
-                android:label="@string/add_new_recipe_title"
-                android:parentActivityName=".MainActivity" />
-        <activity
-                android:name=".FirebaseActivity"
-                android:label="@string/add_new_recipe_title"
-                android:parentActivityName=".MainActivity" />
-        <activity
                 android:name=".RecyclerViewActivity"
                 android:label="@string/lunch_recipes_title"
                 android:parentActivityName=".MainActivity" />
@@ -51,13 +43,6 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.vchohan.cookbook.MainActivity" />
         </activity>
-        <activity
-                android:name=".LoginActivity"
-                android:label="@string/title_activity_login" />
-        <activity
-                android:name=".PhotoActivity"
-                android:label="Photo Activity"
-                android:parentActivityName=".MainActivity" />
 
         <activity android:name=".StorageActivity"
                 android:label="Storage Activity"
