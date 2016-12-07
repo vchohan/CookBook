@@ -11,7 +11,7 @@
         android:layout_marginTop="@dimen/ten_density_pixel"
         android:layout_marginLeft="@dimen/ten_density_pixel"
         android:layout_marginRight="@dimen/ten_density_pixel"
-        card_view:cardBackgroundColor="@color/colorBlueGrey100">
+        card_view:cardBackgroundColor="@color/colorIndigo300">
 
     <LinearLayout
             android:id="@+id/recycler_card_view"

@@ -9,49 +9,51 @@
         tools:showIn="@layout/main_app_bar_layout"
         tools:context="com.vchohan.cookbook.MainActivity">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
             android:id="@+id/recipe_tips_container"
             android:orientation="vertical"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/one_hundred_density_pixel"
             android:gravity="center"
-            android:layout_height="@dimen/one_hundred_density_pixel">
+            app:cardElevation="24dp"
+            app:cardBackgroundColor="@color/colorWhite">
 
         <TextView
                 android:id="@+id/recipe_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center" />
 
-                android:text="adsfsdf"/>
+    </android.support.v7.widget.CardView>
 
-    </LinearLayout>
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
             android:id="@+id/recipe_card_view_container"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/recipe_tips_container">
+            android:layout_below="@+id/recipe_tips_container"
+            android:background="@color/colorIndigo100"
+            app:cardElevation="0dp">
 
-        <Button
-                android:id="@+id/btn_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="0dp"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_add_white_24dp"
-                android:drawableStart="@drawable/ic_add_white_24dp"
-                android:text="Add an item" />
+        <!--<Button-->
+        <!--android:layout_below="@+id/recipe_tips_container"-->
+        <!--android:id="@+id/btn_add"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="0dp"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:drawableLeft="@drawable/ic_add_white_24dp"-->
+        <!--android:drawableStart="@drawable/ic_add_white_24dp"-->
+        <!--android:text="Add an item" />-->
 
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                android:layout_below="@id/btn_add" >
+                android:scrollbars="vertical">
 
         </android.support.v7.widget.RecyclerView>
 
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

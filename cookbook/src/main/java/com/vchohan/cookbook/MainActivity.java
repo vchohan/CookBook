@@ -9,6 +9,8 @@ import com.google.firebase.database.ValueEventListener;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,7 +27,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,11 +50,17 @@ public class MainActivity extends AppCompatActivity
 
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private Random mRandom = new Random();
-
-    private DatabaseReference myRef;
-
     private TextView recipeTip;
+
+    private int mPosition = 0;
+
+    private int mInterval = 5000;
+
+    private Handler mHandler = new Handler();
+
+    private Runnable mRunnable;
+
+    private Random mRandom = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,28 +95,54 @@ public class MainActivity extends AppCompatActivity
     private void setupRecipeTip() {
 
         recipeTip = (TextView) findViewById(R.id.recipe_tip);
-        recipeTip.setText("Hello world of master chefs");
-        recipeTip.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_in_left));
-    }
 
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+
+                final String[] mRecipeTipArray;
+                mRecipeTipArray = getResources().getStringArray(R.array.recipe_tip_array);
+
+                Random random = new Random();
+
+                final int maxIndex = mRecipeTipArray.length;
+                int generatedIndex = random.nextInt(maxIndex);
+
+                if (mPosition >= mRecipeTipArray.length) {
+                    mPosition = 0;
+                }
+
+                recipeTip.setText(mRecipeTipArray[generatedIndex]);
+                recipeTip.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_in_left));
+
+                mPosition++;
+
+                mHandler.postDelayed(mRunnable, mInterval);
+            }
+        };
+
+        mRunnable.run();
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Title");
-        DatabaseReference IngredientsRef = myRef.child("Ingredients");
-        IngredientsRef.addValueEventListener(new ValueEventListener() {
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        DatabaseReference childRef = myRef.child("DINNER/Recipe/Title");
+        childRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String ingredients = dataSnapshot.getValue(String.class);
-                if (ingredients != null) {
+                String title = String.valueOf(dataSnapshot.getValue());
+
+                if (title != null) {
                     // Initialize a new String array
                     // final String[] recipes = initializeArray();
 
                     // Intilize an array list from array
-                    final List<String> recipeList = new ArrayList(Arrays.asList(ingredients));
-
+                    final List<String> recipeList = new ArrayList(Arrays.asList(title));
                     initializeRecyclerView(recipeList);
                 }
             }
@@ -127,7 +160,7 @@ public class MainActivity extends AppCompatActivity
 
         // Get the widgets reference from XML layout
         mLinearLayout = (LinearLayout) findViewById(R.id.recycler_card_view);
-        mButtonAdd = (Button) findViewById(R.id.btn_add);
+//        mButtonAdd = (Button) findViewById(R.id.btn_add);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         // Define a layout for RecyclerView
@@ -141,29 +174,29 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setAdapter(mAdapter);
 
         // Set a click listener for add item button
-        mButtonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Specify the position
-                int position = 0;
-                String itemLabel = "" + mRandom.nextInt(100);
-
-                // Add an item to recipe list
-                recipeList.add(position, "" + itemLabel);
-                mAdapter.notifyItemInserted(position);
-                mRecyclerView.scrollToPosition(position);
-                Toast.makeText(mContext, "Added : " + itemLabel, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        mButtonAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Specify the position
+//                int position = 0;
+//                String itemLabel = "" + mRandom.nextInt(100);
+//
+//                // Add an item to recipe list
+//                recipeList.add(position, "" + itemLabel);
+//                mAdapter.notifyItemInserted(position);
+//                mRecyclerView.scrollToPosition(position);
+//                Toast.makeText(mContext, "Added : " + itemLabel, Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
-//    @NonNull
-//    private String[] initializeArray() {
-//
-//        return new String[]{
-//            // enter here array value
-//        };
-//    }
+    @NonNull
+    private String[] initializeArray() {
+
+        return new String[]{
+            // enter here array value
+        };
+    }
 
     @Override
     public void onBackPressed() {
@@ -191,6 +224,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.action_new_card_View) {
             return true;
         }
 
