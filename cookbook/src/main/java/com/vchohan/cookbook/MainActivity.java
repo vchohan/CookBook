@@ -8,6 +8,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -95,16 +96,14 @@ public class MainActivity extends AppCompatActivity
     private void setupRecipeTip() {
 
         recipeTip = (TextView) findViewById(R.id.recipe_tip);
+        recipeTip.setShadowLayer(2, 2, 2, Color.GRAY);
 
         mRunnable = new Runnable() {
             @Override
             public void run() {
-
                 final String[] mRecipeTipArray;
                 mRecipeTipArray = getResources().getStringArray(R.array.recipe_tip_array);
-
                 Random random = new Random();
-
                 final int maxIndex = mRecipeTipArray.length;
                 int generatedIndex = random.nextInt(maxIndex);
 
@@ -114,19 +113,18 @@ public class MainActivity extends AppCompatActivity
 
                 recipeTip.setText(mRecipeTipArray[generatedIndex]);
                 recipeTip.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_in_left));
-
                 mPosition++;
-
                 mHandler.postDelayed(mRunnable, mInterval);
             }
         };
-
         mRunnable.run();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -177,7 +175,7 @@ public class MainActivity extends AppCompatActivity
 //        mButtonAdd.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                // Specify the position
+                // Specify the position
 //                int position = 0;
 //                String itemLabel = "" + mRandom.nextInt(100);
 //
