@@ -14,8 +14,7 @@
                 android:orientation="vertical"
                 android:id="@+id/recipe_input_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/ten_density_pixel">
+                android:layout_height="match_parent">
 
             <!--add image view container-->
             <LinearLayout
@@ -23,6 +22,7 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/one_hundred_eighty_density_pixel"
+                    android:layout_margin="@dimen/ten_density_pixel"
                     android:gravity="center"
                     android:background="@drawable/border_view">
 
@@ -73,6 +73,7 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/ten_density_pixel"
                     android:padding="@dimen/ten_density_pixel">
 
                 <android.support.design.widget.TextInputLayout
@@ -96,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                    <EditText
+                    <MultiAutoCompleteTextView
                             android:id="@+id/recipe_ingredients"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -111,7 +112,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                    <EditText
+                    <MultiAutoCompleteTextView
                             android:id="@+id/recipe_method"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -126,7 +127,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                    <EditText
+                    <MultiAutoCompleteTextView
                             android:id="@+id/recipe_notes"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -140,12 +141,13 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/save_button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="SAVE"
-                android:gravity="center"
-                    android:layout_marginBottom="@dimen/twenty_density_pixel"/>
+                    android:id="@+id/save_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="SAVE"
+                    android:textColor="@color/colorWhite"
+                    android:gravity="center"
+                    android:background="@color/colorIndigo500" />
 
         </LinearLayout>
 

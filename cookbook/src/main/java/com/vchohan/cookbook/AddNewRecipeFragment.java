@@ -1,14 +1,22 @@
 package com.vchohan.cookbook;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +24,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +42,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -65,13 +77,26 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
 
     private static final int MY_REQUEST_CODE = 100;
 
-    private String userChoosenTask;
+    private String selectImageOptions;
+
+    private Uri mImageUri = null;
+
+    private Bitmap mBitmap;
+
+    private FirebaseAuth mAuth;
+
+    private DatabaseReference mDatabase;
+
+    private StorageReference mStorage;
+
+    private ProgressDialog mProgressDialog;
 
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
     public AddNewRecipeFragment() {
+
     }
 
     /**
@@ -91,6 +116,11 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
         View rootView = inflater.inflate(R.layout.add_new_recipe_fragment, container, false);
         initializeView(rootView);
 
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        mStorage = FirebaseStorage.getInstance().getReference();
+
         return rootView;
     }
 
@@ -100,7 +130,7 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
             @Override
             public void onClick(View v) {
                 //launch camera
-                selectImage();
+                selectRecipeImageFrom();
             }
         });
 
@@ -128,9 +158,82 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
         recipeSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getRecipeUserInput(rootView);
+                saveRecipeToDatabase();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.getCurrentUser();
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getContext());
+            mProgressDialog.setMessage("Please wait while we save your recipe...");
+            mProgressDialog.setIndeterminate(true);
+        }
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    private void saveRecipeToDatabase() {
+        showProgressDialog();
+
+        final String keyImage = "Image";
+        final String keyMealCategory = "Meal";
+        final String keyTitle = "Title";
+        final String keyIngredients = "Ingredients";
+        final String keyMethod = "Method";
+        final String keyNotes = "Notes";
+
+        final String valueMealCategory = recipeCategoryValue.trim();
+        final String valueTitle = recipeTitle.getText().toString().trim();
+        final String valueIngredients = recipeIngredients.getText().toString().trim();
+        final String valueMethod = recipeMethod.getText().toString().trim();
+        final String valueNotes = recipeNotes.getText().toString().trim();
+
+        if (mImageUri != null &&
+            !TextUtils.isEmpty(valueMealCategory) &&
+            !TextUtils.isEmpty(valueTitle) &&
+            !TextUtils.isEmpty(valueIngredients) &&
+            !TextUtils.isEmpty(valueMethod)) {
+
+            StorageReference filePath = mStorage.child("RecipeImages").child(mImageUri.getLastPathSegment());
+            filePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    Uri downlaodUri = taskSnapshot.getDownloadUrl();
+
+                    DatabaseReference newRecipe = mDatabase.push();
+
+                    newRecipe.child(keyImage).setValue(downlaodUri.toString());
+                    newRecipe.child(keyMealCategory).setValue(valueMealCategory);
+                    newRecipe.child(keyTitle).setValue(valueTitle);
+                    newRecipe.child(keyIngredients).setValue(valueIngredients);
+                    newRecipe.child(keyMethod).setValue(valueMethod);
+                    newRecipe.child(keyNotes).setValue(valueNotes);
+
+                    hideProgressDialog();
+                    Toast.makeText(getContext(), "Your Recipe was successfully saved!", Toast.LENGTH_LONG).show();
+
+                    //once the user has saved the info direct them to main activity.
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                }
+            });
+        } else {
+            hideProgressDialog();
+            String errorText = "Please enter your recipe Title, Ingredients and Method";
+            Snackbar.make(getView(), errorText, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        }
     }
 
     @Override
@@ -145,68 +248,7 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
 
     }
 
-    private void getRecipeUserInput(View rootView) {
-        if (recipeTitle.getText().toString().trim().length() == 0 &&
-            recipeIngredients.getText().toString().trim().length() == 0 &&
-            recipeMethod.getText().toString().trim().length() == 0) {
-            String errorText = "Please enter your recipe Title, Ingredients and Method";
-            Snackbar.make(rootView, errorText, Snackbar.LENGTH_LONG).setAction("Action", null).show();
-        } else {
-            Intent recipeViewerIntent = new Intent(getContext(), RecipeViewHolderActivity.class);
-            recipeViewerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            // passing string value to another activity
-            if (recipeViewerIntent != null) {
-
-                // send value to the database
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-                String[] keyMealCategory = getResources().getStringArray(R.array.recipe_category_array);
-                String keyTitle = "Title";
-                String keyIngredients = "Ingredients";
-                String keyMethod = "Method";
-                String keyNotes = "Notes";
-
-                String valueMealCategory = recipeCategoryValue;
-                String valueTitle = recipeTitle.getText().toString();
-                String valueIngredients = recipeIngredients.getText().toString();
-                String valueMethod = recipeMethod.getText().toString();
-                String valueNotes = recipeNotes.getText().toString();
-
-                //set recipe image and write to database
-                //TODO: implement recipe image
-
-                DatabaseReference myRef;
-                myRef = database.getReference(valueMealCategory);
-
-                DatabaseReference childTitle = myRef.child(valueTitle);
-                childTitle.setValue(valueTitle);
-
-                DatabaseReference childIngredients = childTitle.child(keyIngredients);
-                childIngredients.setValue(valueIngredients);
-
-                DatabaseReference childMethod = childTitle.child(keyMethod);
-                childMethod.setValue(valueMethod);
-
-                DatabaseReference childNotes = childTitle.child(keyNotes);
-                childNotes.setValue(valueNotes);
-
-                // Here passing the user input values to another activity
-                recipeViewerIntent.putExtra(keyTitle, valueTitle);
-                //TODO: implement recipe image
-                recipeViewerIntent.putExtra(keyIngredients, valueIngredients);
-                recipeViewerIntent.putExtra(keyMethod, valueMethod);
-                recipeViewerIntent.putExtra(keyNotes, valueNotes);
-
-                startActivity(recipeViewerIntent);
-            }
-
-            String recipeSaved = getString(R.string.recipe_saved);
-            Toast.makeText(getContext(), recipeSaved, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void selectImage() {
+    private void selectRecipeImageFrom() {
         final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Add Photo!");
@@ -215,12 +257,12 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
             public void onClick(DialogInterface dialog, int item) {
                 boolean result = CameraUtility.checkPermission(getContext());
                 if (items[item].equals("Take Photo")) {
-                    userChoosenTask = "Take Photo";
+                    selectImageOptions = "Take Photo";
                     if (result) {
                         cameraIntent();
                     }
                 } else if (items[item].equals("Choose from Library")) {
-                    userChoosenTask = "Choose from Library";
+                    selectImageOptions = "Choose from Library";
                     if (result) {
                         galleryIntent();
                     }
@@ -236,9 +278,7 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (getActivity().checkSelfPermission(Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-
-                requestPermissions(new String[]{Manifest.permission.CAMERA},
-                    MY_REQUEST_CODE);
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_REQUEST_CODE);
             }
         }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -260,9 +300,9 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
                 switch (requestCode) {
                     case CameraUtility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                            if (userChoosenTask.equals("Take Photo")) {
+                            if (selectImageOptions.equals("Take Photo")) {
                                 cameraIntent();
-                            } else if (userChoosenTask.equals("Choose from Library")) {
+                            } else if (selectImageOptions.equals("Choose from Library")) {
                                 galleryIntent();
                             }
                         } else {
@@ -271,9 +311,9 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
                         break;
                 }
             } else {
-                // Your app will not have this permission. Turn off all functions
-                // that require this permission or it will force close like your
-                // original question
+                // Your app will not have this permission.
+                String errorText = "Permission was denied to access your camera, please visit app settings to allow permission";
+                Snackbar.make(getView(), errorText, Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         }
     }
@@ -281,7 +321,8 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
+
+        if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_FILE) {
                 onSelectFromGalleryResult(data);
             } else if (requestCode == REQUEST_CAMERA) {
@@ -292,15 +333,77 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
 
     @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bm = null;
+
+//        if (data != null) {
+//            try {
+//                mBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
         if (data != null) {
             try {
-                bm = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
-            } catch (IOException e) {
+                mImageUri = data.getData();
+                mBitmap = decodeSampledBitmapFromUri(getActivity(), mImageUri);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+            recipeImage.setImageBitmap(mBitmap);
         }
-        recipeImage.setImageBitmap(bm);
+    }
+
+    public static Bitmap decodeSampledBitmapFromUri(Activity callingActivity, Uri uri) {
+        try {
+            InputStream input = callingActivity.getContentResolver().openInputStream(uri);
+
+            // First decode with inJustDecodeBounds=true to check dimensions
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            options.inSampleSize = 2; // make the bitmap size half of the original image.
+            BitmapFactory.decodeStream(input, null, options);
+
+            // Calculate inSampleSize
+            options.inSampleSize = calculateInSampleSize(options);
+            input.close();
+
+            // Decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false;
+
+            input = callingActivity.getContentResolver().openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(input, null, options);
+            return bitmap;
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {// TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options) {
+        // Raw height and width of image
+        final int width = options.outWidth;
+        final int height = options.outHeight;
+
+        int inSampleSize = 1;
+
+//        if (height > regularHeight || width > regularWidth) {
+//
+//            final int halfHeight = height / 2;
+//            final int halfWidth = width / 2;
+//
+//            // Calculate the largest inSampleSize value that is a power of 2 and
+//            // keep both height and width larger than the requested height and width.
+//            while ((halfHeight / inSampleSize) > regularHeight
+//                && (halfWidth / inSampleSize) > regularWidth) {
+//                inSampleSize *= 2;
+//            }
+//        }
+        return inSampleSize;
     }
 
     private void onCaptureImageResult(Intent data) {
