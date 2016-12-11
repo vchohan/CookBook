@@ -3,26 +3,23 @@
     <string name="app_name">COOK BOOK</string>
 
     <!--page title-->
-    <string name="add_new_recipe_title">ADD A NEW RECIPE</string>
-    <string name="lunch_recipes_title">LUNCH RECIPES</string>
+    <string name="add_new_recipe_page_title">ADD A NEW RECIPE</string>
 
     <!--drawer strings-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="drawer_title">My Cook Book</string>
 
     <!--menu strings-->
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
-    <string name="action_new_card">Add New Card</string>
 
     <!--recipe tips-->
-    <string-array name="recipe_tip_array">
-        <item>BREAKFAST</item>
-        <item>LUNCH</item>
-        <item>SNACK</item>
-        <item>DINNER</item>
-        <item>DESSERT</item>
+    <string-array name="recipe_tips_array">
+        <item>Air fryer is the best!</item>
+        <item>Crock pot is awesome.</item>
+        <item>Pressure cooker is great for Indian food.</item>
+        <item>Oven is traditional and classic.</item>
+        <item>Pan fry or saute, just plan easy.</item>
     </string-array>
 
     <!--spinner category-->
@@ -41,28 +38,5 @@
     <string name="recipe_notes_header">NOTES:</string>
 
     <!--other strings-->
-    <string name="title_activity_login">Sign in</string>
-
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
-
-    <string name="camera_button_text">Upload</string>
-    <string name="sign_in_prompt">Sign In to begin</string>
-    <string name="take_photo_prompt">Upload a Photo</string>
-    <string name="download">Download</string>
-    <string name="sign_in_anonymously">Sign In</string>
-    <string name="rationale_storage">This sample reads images from your camera to demonstrate uploading.</string>
-    <string name="label_link">Link to Uploaded File</string>
-    <string name="label_download">Download File</string>
-    <string name="log_out">Log out</string>
-    <string name="success">Success</string>
 
 </resources>

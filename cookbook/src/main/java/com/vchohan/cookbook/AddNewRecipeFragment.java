@@ -118,6 +118,7 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Recipe");
         mStorage = FirebaseStorage.getInstance().getReference();
 

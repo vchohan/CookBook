@@ -1,5 +1,6 @@
 package com.vchohan.cookbook;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -48,10 +50,24 @@ public class MainActivity extends AppCompatActivity
 
     private Runnable mRunnable;
 
+    private FirebaseAuth mAuth;
+
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+
+                }
+            }
+        };
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Recipe");
 
@@ -91,7 +107,7 @@ public class MainActivity extends AppCompatActivity
         super.onStart();
 
         FirebaseRecyclerAdapter<RecipeUtils, RecipeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<RecipeUtils,
-            RecipeViewHolder>(RecipeUtils.class, R.layout.main_recycler_custom_view, RecipeViewHolder.class, mDatabase) {
+            RecipeViewHolder>(RecipeUtils.class, R.layout.main_recipe_custom_card_view, RecipeViewHolder.class, mDatabase) {
             @Override
             protected void populateViewHolder(RecipeViewHolder viewHolder, RecipeUtils model, int position) {
                 viewHolder.setTitle(model.getTitle());
@@ -130,7 +146,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 final String[] mRecipeTipArray;
-                mRecipeTipArray = getResources().getStringArray(R.array.recipe_tip_array);
+                mRecipeTipArray = getResources().getStringArray(R.array.recipe_tips_array);
                 Random random = new Random();
                 final int maxIndex = mRecipeTipArray.length;
                 int generatedIndex = random.nextInt(maxIndex);
