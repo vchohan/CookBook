@@ -1,17 +1,13 @@
 package com.vchohan.cookbook;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,13 +21,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.squareup.picasso.Picasso;
+
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
@@ -39,17 +34,9 @@ public class MainActivity extends AppCompatActivity
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private Context mContext;
+    private DatabaseReference mDatabase;
 
-    LinearLayout mLinearLayout;
-
-    private RecyclerView mRecyclerView;
-
-    private Button mButtonAdd;
-
-    private RecyclerView.Adapter mAdapter;
-
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView mRecipeRecyclerView;
 
     private TextView recipeTip;
 
@@ -61,12 +48,17 @@ public class MainActivity extends AppCompatActivity
 
     private Runnable mRunnable;
 
-    private Random mRandom = new Random();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Recipe");
+
+        //setup recipe recyclerView
+        mRecipeRecyclerView = (RecyclerView) findViewById(R.id.recipe_recycler_view);
+        mRecipeRecyclerView.setHasFixedSize(true);
+        mRecipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,10 +83,46 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         setupRecipeTip();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseRecyclerAdapter<RecipeUtils, RecipeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<RecipeUtils,
+            RecipeViewHolder>(RecipeUtils.class, R.layout.main_recycler_custom_view, RecipeViewHolder.class, mDatabase) {
+            @Override
+            protected void populateViewHolder(RecipeViewHolder viewHolder, RecipeUtils model, int position) {
+                viewHolder.setTitle(model.getTitle());
+                viewHolder.setImage(getApplicationContext(), model.getImage());
+            }
+        };
+
+        mRecipeRecyclerView.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
+
+        View mView;
+
+        public RecipeViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+        }
+
+        public void setTitle(String title) {
+            TextView recyclerRecipeTitle = (TextView) mView.findViewById(R.id.recycler_recipe_title);
+            recyclerRecipeTitle.setText(title);
+        }
+
+        public void setImage(Context context, String image) {
+            ImageView recipeImage = (ImageView) mView.findViewById(R.id.recycler_recipe_image);
+            Picasso.with(context).load(image).into(recipeImage);
+        }
     }
 
     private void setupRecipeTip() {
-
         recipeTip = (TextView) findViewById(R.id.recipe_tip);
         recipeTip.setShadowLayer(2, 2, 2, Color.GRAY);
 
@@ -121,82 +149,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        
-
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-
-        DatabaseReference childRef = myRef.child("DINNER/Recipe/Title");
-        childRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String title = String.valueOf(dataSnapshot.getValue());
-
-                if (title != null) {
-                    // Initialize a new String array
-                    // final String[] recipes = initializeArray();
-
-                    // Intilize an array list from array
-                    final List<String> recipeList = new ArrayList(Arrays.asList(title));
-                    initializeRecyclerView(recipeList);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void initializeRecyclerView(final List<String> recipeList) {
-        // Get the application context
-        mContext = getApplicationContext();
-
-        // Get the widgets reference from XML layout
-        mLinearLayout = (LinearLayout) findViewById(R.id.recycler_card_view);
-//        mButtonAdd = (Button) findViewById(R.id.btn_add);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-        // Define a layout for RecyclerView
-        mLayoutManager = new LinearLayoutManager(mContext);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // Initialize a new instance of RecyclerView Adapter instance
-        mAdapter = new MainRecyclerViewAdapter(mContext, recipeList);
-
-        // Set the adapter for RecyclerView
-        mRecyclerView.setAdapter(mAdapter);
-
-        // Set a click listener for add item button
-//        mButtonAdd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-                // Specify the position
-//                int position = 0;
-//                String itemLabel = "" + mRandom.nextInt(100);
-//
-//                // Add an item to recipe list
-//                recipeList.add(position, "" + itemLabel);
-//                mAdapter.notifyItemInserted(position);
-//                mRecyclerView.scrollToPosition(position);
-//                Toast.makeText(mContext, "Added : " + itemLabel, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-    }
-
-    @NonNull
-    private String[] initializeArray() {
-
-        return new String[]{
-            // enter here array value
-        };
-    }
-
-    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -215,15 +167,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
-        } else if (id == R.id.action_new_card_View) {
             return true;
         }
 
@@ -245,10 +192,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
-            Intent intent = new Intent(this, StorageActivity.class);
-            startActivity(intent);
 
         } else if (id == R.id.nav_send) {
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

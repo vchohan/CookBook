@@ -187,12 +187,12 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
     private void saveRecipeToDatabase() {
         showProgressDialog();
 
-        final String keyImage = "Image";
-        final String keyMealCategory = "Meal";
-        final String keyTitle = "Title";
-        final String keyIngredients = "Ingredients";
-        final String keyMethod = "Method";
-        final String keyNotes = "Notes";
+        final String keyImage = "image";
+        final String keyMealCategory = "meal";
+        final String keyTitle = "title";
+        final String keyIngredients = "ingredients";
+        final String keyMethod = "method";
+        final String keyNotes = "notes";
 
         final String valueMealCategory = recipeCategoryValue.trim();
         final String valueTitle = recipeTitle.getText().toString().trim();

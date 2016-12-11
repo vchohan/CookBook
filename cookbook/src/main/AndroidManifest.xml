@@ -45,9 +45,6 @@
                     android:value="com.vchohan.cookbook.MainActivity" />
         </activity>
 
-        <activity android:name=".StorageActivity"
-                android:label="Storage Activity"
-                android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

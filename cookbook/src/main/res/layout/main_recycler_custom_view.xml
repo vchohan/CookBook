@@ -3,15 +3,13 @@
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/one_hundred_fifty_density_pixel"
+        android:layout_height="@dimen/two_hundred_density_pixel"
         card_view:cardCornerRadius="@dimen/five_density_pixel"
         card_view:cardMaxElevation="@dimen/five_density_pixel"
         card_view:cardElevation="@dimen/five_density_pixel"
-        card_view:contentPadding="@dimen/five_density_pixel"
         android:layout_marginTop="@dimen/ten_density_pixel"
         android:layout_marginLeft="@dimen/ten_density_pixel"
-        android:layout_marginRight="@dimen/ten_density_pixel"
-        card_view:cardBackgroundColor="@color/colorIndigo300">
+        android:layout_marginRight="@dimen/ten_density_pixel">
 
     <LinearLayout
             android:id="@+id/recycler_card_view"
@@ -20,39 +18,45 @@
             android:layout_height="match_parent">
 
         <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:gravity="center">
+
+            <ImageView
+                    android:id="@+id/recycler_recipe_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_menu_camera" />
+
+        </LinearLayout>
+
+        <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/five_density_pixel"
+                android:layout_height="match_parent"
+                android:padding="@dimen/ten_density_pixel"
+                android:gravity="center"
                 android:weightSum="1">
 
             <TextView
                     android:id="@+id/recycler_recipe_title"
-                    android:layout_width="@dimen/two_hundred_density_pixel"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="20dp"
+                    android:layout_width="300dp"
+                    android:layout_height="match_parent"
+                    android:text="asdfasdfasf"
+                    android:textSize="18sp"
+                    android:textAllCaps="true"
                     android:textStyle="bold"
-                    android:layout_weight="0.96" />
+                    android:layout_weight="1"
+                    android:gravity="center_vertical" />
 
             <ImageButton
                     android:id="@+id/recycler_remove_button"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:src="@drawable/ic_blur_on_black_24dp"
                     android:background="@android:color/transparent" />
-
-        </LinearLayout>
-        
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <TextView
-                    android:id="@+id/recycler_recipe_ingredients"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
         </LinearLayout>
 
