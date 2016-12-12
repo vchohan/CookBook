@@ -41,7 +41,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -75,7 +74,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private EditText loginUserPassword;
 
-    private Button loginButton, registerButton;
+    private Button loginButton;
+
+    private TextView registerButton;
 
     private SignInButton mGoogleButton;
 
@@ -108,10 +109,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         loginUserPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
                 return false;
             }
         });
@@ -124,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        registerButton = (Button) findViewById(R.id.login_register_button);
+        registerButton = (TextView) findViewById(R.id.login_register_button);
         registerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

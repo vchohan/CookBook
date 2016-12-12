@@ -4,111 +4,221 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
+        android:layout_margin="@dimen/twenty_density_pixel"
+        android:layout_gravity="center"
         tools:context="com.vchohan.cookbook.LoginActivity">
 
-    <!-- Login progress -->
+    <!-- login progress bar -->
     <ProgressBar
             android:id="@+id/login_progress"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:visibility="gone" />
 
     <ScrollView
             android:id="@+id/login_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/twenty_density_pixel">
+            android:scrollbars="none">
 
         <LinearLayout
-                android:id="@+id/login_form_container"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:weightSum="1">
 
-            <ImageView
-                    android:id="@+id/app_logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/app_icon"/>
-
-            <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <AutoCompleteTextView
-                        android:id="@+id/login_user_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_email"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <EditText
-                        android:id="@+id/login_user_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_password"
-                        android:imeActionId="@+id/login"
-                        android:imeActionLabel="@string/action_login"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="textPassword"
-                        android:maxLines="1"/>
-
-            </android.support.design.widget.TextInputLayout>
-
+            <!-- profile image view container -->
             <LinearLayout
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
+                    android:layout_weight="1">
 
-                <Button
-                        android:id="@+id/login_button"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
+                <ImageButton
+                        android:id="@+id/profileImage"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
                         android:layout_margin="@dimen/ten_density_pixel"
-                        android:text="@string/action_login"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorWhite"
-                        android:background="@color/colorIndigo500"
-                        android:elevation="24dp" />
+                        android:src="@drawable/ic_person_white_24dp"
+                        android:background="@drawable/border_view_circle" />
 
-                <Button
-                        android:id="@+id/login_register_button"
-                        android:layout_width="150dp"
+                <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/ten_density_pixel"
-                        android:text="@string/action_register"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorWhite"
-                        android:background="@color/colorIndigo500"
-                        android:elevation="24dp" />
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/twenty_density_pixel"
+                        android:text="SWITCH PROFILE"/>
 
             </LinearLayout>
 
-            <TextView
-                    android:layout_width="wrap_content"
+            <!-- profile email container -->
+            <LinearLayout
+                    android:id="@+id/login_email_container"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:background="@drawable/border_view_rectangle">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/ten_density_pixel"
+                        android:background="@color/colorIndigo300"
+                        android:src="@drawable/ic_account_box_white_24dp" />
+
+                <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/five_density_pixel">
+
+                    <AutoCompleteTextView
+                            android:id="@+id/login_user_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/ten_density_pixel"
+                            android:hint="@string/prompt_email"
+                            android:inputType="textEmailAddress"
+                            android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <!-- profile password container -->
+            <LinearLayout
+                    android:id="@+id/login_password_container"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ten_density_pixel"
-                    android:layout_gravity="center"
-                    android:text="@string/action_login_google"/>
+                    android:gravity="center"
+                    android:background="@drawable/border_view_rectangle">
 
-            <com.google.android.gms.common.SignInButton
-                    android:id="@+id/google_sign_in_button"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/ten_density_pixel"
-                    android:layout_gravity="center"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/ten_density_pixel"
+                        android:background="@color/colorIndigo300"
+                        android:src="@drawable/ic_vpn_key_white_24dp" />
+
+                <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/five_density_pixel">
+
+                    <EditText
+                            android:id="@+id/login_user_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/ten_density_pixel"
+                            android:hint="@string/prompt_password"
+                            android:inputType="textPassword"
+                            android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <!-- login / register / sign-in button container -->
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                <!-- profile remember switch / login container -->
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="1">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/ten_density_pixel"
+                            android:layout_gravity="center"
+                            android:text="Remember Me" />
+
+                    <Switch
+                            android:id="@+id/login_user_remember"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/ten_density_pixel"
+                            android:layout_gravity="center"
+                            android:elevation="17dp" />
+
+                    <Button
+                            android:id="@+id/login_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/ten_density_pixel"
+                            android:background="@color/colorIndigo500"
+                            android:elevation="24dp"
+                            android:text="@string/action_login"
+                            android:textColor="@color/colorWhite"/>
+
+                </LinearLayout>
+
+                <!-- profile register container -->
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="1">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/ten_density_pixel"
+                            android:text="@string/register_text"/>
+
+                    <Button
+                            android:id="@+id/login_register_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/ten_density_pixel"
+                            android:background="@color/colorIndigo500"
+                            android:elevation="24dp"
+                            android:text="@string/action_register"
+                            android:textColor="@color/colorWhite"/>
+
+                </LinearLayout>
+
+                <!-- profile google sign in container -->
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="1">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/ten_density_pixel"
+                            android:layout_gravity="center"
+                            android:text="@string/action_login_google"/>
+
+                    <com.google.android.gms.common.SignInButton
+                            android:id="@+id/google_sign_in_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/ten_density_pixel"
+                            android:background="@color/colorIndigo500"
+                            android:elevation="2dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
