@@ -45,6 +45,7 @@
     <string name="prompt_password">Password</string>
     <string name="action_register">Register</string>
     <string name="action_login">Login</string>
+    <string name="action_login_google">Sign In below with Google Account</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
