@@ -1,8 +1,11 @@
 package com.vchohan.cookbook;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,14 +34,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity
-    implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private DatabaseReference mDatabase;
-
     private RecyclerView mRecipeRecyclerView;
+
+    private LinearLayoutManager mLinearLayoutManager;
 
     private TextView recipeTip;
 
@@ -50,9 +52,13 @@ public class MainActivity extends AppCompatActivity
 
     private Runnable mRunnable;
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = null;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private DatabaseReference mDatabase;
+
+    private DatabaseReference mDatabaseUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,18 +70,54 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-
+                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(loginIntent);
+                } else {
+                    new RegisterActivity().finish();
                 }
+
             }
         };
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        mDatabase.keepSynced(true);
+
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabaseUsers.keepSynced(true);
 
         //setup recipe recyclerView
         mRecipeRecyclerView = (RecyclerView) findViewById(R.id.recipe_recycler_view);
-        mRecipeRecyclerView.setHasFixedSize(true);
-        mRecipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mLinearLayoutManager.setReverseLayout(true);
+        mLinearLayoutManager.setStackFromEnd(true);
+
+        mRecipeRecyclerView.setHasFixedSize(true);
+        mRecipeRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+        setupToolBarAndNavigationDrawer();
+        setupRecipeTipsCardView();
+        checkExistingUser();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mAuth.addAuthStateListener(mAuthListener);
+        FirebaseRecyclerAdapter<RecipeUtils, RecipeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<RecipeUtils,
+            RecipeViewHolder>(RecipeUtils.class, R.layout.main_recipe_custom_card_view, RecipeViewHolder.class, mDatabase) {
+            @Override
+            protected void populateViewHolder(RecipeViewHolder viewHolder, RecipeUtils model, int position) {
+                viewHolder.setTitle(model.getTitle());
+                viewHolder.setImage(getApplicationContext(), model.getImage());
+            }
+        };
+        mRecipeRecyclerView.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    private void setupToolBarAndNavigationDrawer() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -97,25 +139,28 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        setupRecipeTip();
-
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void checkExistingUser() {
 
-        FirebaseRecyclerAdapter<RecipeUtils, RecipeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<RecipeUtils,
-            RecipeViewHolder>(RecipeUtils.class, R.layout.main_recipe_custom_card_view, RecipeViewHolder.class, mDatabase) {
-            @Override
-            protected void populateViewHolder(RecipeViewHolder viewHolder, RecipeUtils model, int position) {
-                viewHolder.setTitle(model.getTitle());
-                viewHolder.setImage(getApplicationContext(), model.getImage());
-            }
-        };
+        if (mAuth.getCurrentUser() != null) {
+            final String userId = mAuth.getCurrentUser().getUid();
+            mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild(userId)) {
+                        Intent setupIntent = new Intent(MainActivity.this, ProfileSetupActivity.class);
+                        setupIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(setupIntent);
+                    }
+                }
 
-        mRecipeRecyclerView.setAdapter(firebaseRecyclerAdapter);
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
@@ -138,7 +183,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void setupRecipeTip() {
+    private void setupRecipeTipsCardView() {
         recipeTip = (TextView) findViewById(R.id.recipe_tip);
         recipeTip.setShadowLayer(2, 2, 2, Color.GRAY);
 
@@ -188,9 +233,16 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_logout) {
+            logout();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        mAuth.signOut();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

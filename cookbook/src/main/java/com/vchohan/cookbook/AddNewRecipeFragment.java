@@ -1,7 +1,6 @@
 package com.vchohan.cookbook;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -83,7 +82,7 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
 
     private Bitmap mBitmap;
 
-    private FirebaseAuth mAuth;
+//    private FirebaseAuth mAuth;
 
     private DatabaseReference mDatabase;
 
@@ -117,7 +116,7 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
         initializeView(rootView);
 
         // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Recipe");
         mStorage = FirebaseStorage.getInstance().getReference();
@@ -167,7 +166,7 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onStart() {
         super.onStart();
-        mAuth.getCurrentUser();
+//        mAuth.getCurrentUser();
     }
 
     private void showProgressDialog() {
@@ -227,7 +226,9 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
                     Toast.makeText(getContext(), "Your Recipe was successfully saved!", Toast.LENGTH_LONG).show();
 
                     //once the user has saved the info direct them to main activity.
-                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    Intent mainIntent  = new Intent(getActivity(), MainActivity.class);
+                    mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(mainIntent);
                 }
             });
         } else {

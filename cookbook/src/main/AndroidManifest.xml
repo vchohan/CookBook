@@ -28,18 +28,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+                android:name=".RegisterActivity"
+                android:label="@string/user_registration_page_title" />
 
+        <activity
+                android:name=".ProfileSetupActivity"
+                android:label="@string/user_profile_setup_page_title" />
+        <activity
+                android:name=".LoginActivity"
+                android:label="@string/user_login_page_title" />
         <activity
                 android:name=".AddNewRecipeActivity"
                 android:label="@string/add_new_recipe_page_title"
                 android:parentActivityName=".MainActivity" />
         <activity
-                android:name=".RecyclerViewActivity"
-                android:parentActivityName=".MainActivity" />
-        <activity
                 android:name=".RecipeViewHolderActivity"
                 android:parentActivityName=".MainActivity" />
+        <activity
+                android:name=".RecyclerViewActivity"
+                android:parentActivityName=".MainActivity" />
 
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
     </application>
 
 </manifest>

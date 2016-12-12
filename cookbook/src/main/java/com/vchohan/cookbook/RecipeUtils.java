@@ -10,9 +10,6 @@ public class RecipeUtils {
 
     private String title;
 
-
-
-
     public RecipeUtils () {
 
     }

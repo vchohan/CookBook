@@ -24,7 +24,7 @@
                     android:layout_height="@dimen/one_hundred_eighty_density_pixel"
                     android:layout_margin="@dimen/ten_density_pixel"
                     android:gravity="center"
-                    android:background="@drawable/border_view">
+                    android:background="@drawable/border_view_rectangle">
 
                 <ImageView
                         android:id="@+id/recipe_image"
