@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setupToolBarAndNavigationDrawer();
         setupRecipeTipsCardView();
-        checkExistingUser();
+//        checkExistingUser();
     }
 
     @Override
@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void checkExistingUser() {
-
         if (mAuth.getCurrentUser() != null) {
             final String userId = mAuth.getCurrentUser().getUid();
             mDatabaseUsers.addValueEventListener(new ValueEventListener() {

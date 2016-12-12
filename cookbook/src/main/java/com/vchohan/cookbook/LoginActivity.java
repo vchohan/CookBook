@@ -115,6 +115,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        registerButton = (Button) findViewById(R.id.login_register_button);
+        registerButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+                registerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(registerIntent);
+            }
+        });
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
@@ -161,7 +171,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }
     }
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -227,11 +236,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         startActivity(mainIntent);
                     } else {
                         showProgress(false);
-                        Toast.makeText(LoginActivity.this, "Login was successful, please create a new profile", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
 
-                        Intent setupIntent = new Intent(LoginActivity.this, ProfileSetupActivity.class);
-                        setupIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(setupIntent);
+                        if (mAuth.getCurrentUser().getDisplayName() == null || mAuth.getCurrentUser().getPhotoUrl() == null) {
+                            Intent setupIntent = new Intent(LoginActivity.this, ProfileSetupActivity.class);
+                            setupIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(setupIntent);
+                        }
                     }
                 }
 
@@ -372,7 +383,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         checkExistingUser();
                         showProgress(false);
                     } else {
-                        Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login Error, please check you credentials", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

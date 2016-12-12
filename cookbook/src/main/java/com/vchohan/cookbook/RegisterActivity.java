@@ -85,7 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainIntent);
                     }
-
                 }
             });
         } else {

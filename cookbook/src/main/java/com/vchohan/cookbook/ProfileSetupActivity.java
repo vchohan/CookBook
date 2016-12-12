@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -46,6 +47,9 @@ public class ProfileSetupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_setup_activity);
+
+        String toastText = "Please setup your new profile image and display name.";
+        Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
 
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference().child("ProfileImages");
@@ -81,13 +85,15 @@ public class ProfileSetupActivity extends AppCompatActivity {
         final String userId = mAuth.getCurrentUser().getUid();
 
         if (!TextUtils.isEmpty(name) && mImageUri != null) {
-
             showProgressDialog();
 
             StorageReference filePath = mStorage.child(mImageUri.getLastPathSegment());
             filePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    Toast.makeText(ProfileSetupActivity.this, "Profile was successfully created", Toast.LENGTH_SHORT).show();
+
                     String downlaodUri = taskSnapshot.getDownloadUrl().toString();
 
                     mDatabaseUsers.child(userId).child("name").setValue(name);
@@ -100,6 +106,9 @@ public class ProfileSetupActivity extends AppCompatActivity {
                     startActivity(mainIntent);
                 }
             });
+        } else {
+            String toastText = "Please select you profile image and enter your name.";
+            Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
         }
     }
 
