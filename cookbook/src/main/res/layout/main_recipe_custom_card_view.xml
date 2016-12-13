@@ -45,19 +45,29 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="1">
+                    android:paddingLeft="@dimen/ten_density_pixel"
+                    android:layout_gravity="center">
 
-                <!-- title text / username layout -->
+                <ImageButton
+                        android:id="@+id/recycler_remove_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_blur_on_black_24dp"
+                        android:background="@android:color/transparent" />
+
                 <LinearLayout
                         android:orientation="vertical"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/ten_density_pixel"
+                        android:gravity="center">
 
                     <TextView
                             android:id="@+id/recycler_recipe_title"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/ten_density_pixel"
+                            android:layout_gravity="center"
                             android:text="recipe title"
                             android:textSize="14sp"
                             android:textAllCaps="true"
@@ -65,21 +75,14 @@
 
                     <TextView
                             android:id="@+id/recycler_recipe_username"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/ten_density_pixel"
+                            android:layout_gravity="center"
                             android:text="username"
                             android:textSize="12sp"
                             android:textAllCaps="true" />
 
                 </LinearLayout>
-
-                <ImageButton
-                        android:id="@+id/recycler_remove_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_blur_on_black_24dp"
-                        android:background="@android:color/transparent" />
 
             </LinearLayout>
 
