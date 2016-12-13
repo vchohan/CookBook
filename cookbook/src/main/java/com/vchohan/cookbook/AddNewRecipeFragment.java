@@ -82,8 +82,6 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
 
     private Bitmap mBitmap;
 
-//    private FirebaseAuth mAuth;
-
     private DatabaseReference mDatabase;
 
     private StorageReference mStorage;
@@ -114,9 +112,6 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
         Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.add_new_recipe_fragment, container, false);
         initializeView(rootView);
-
-        // Initialize Firebase Auth
-//        mAuth = FirebaseAuth.getInstance();
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Recipe");
         mStorage = FirebaseStorage.getInstance().getReference();
@@ -161,12 +156,6 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
                 saveRecipeToDatabase();
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-//        mAuth.getCurrentUser();
     }
 
     private void showProgressDialog() {
@@ -333,16 +322,7 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
-
-//        if (data != null) {
-//            try {
-//                mBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
 
         if (data != null) {
             try {

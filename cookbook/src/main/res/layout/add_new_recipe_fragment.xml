@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:context="com.vchohan.cookbook.AddNewRecipeFragment">
 
+    <!--recipe user input scroll view container-->
     <ScrollView
-            android:id="@+id/recipe_container"
+            android:id="@+id/recipe_input_form"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:layout_above="@+id/recipe_save_button">
 
         <LinearLayout
-                android:orientation="vertical"
                 android:id="@+id/recipe_input_container"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/ten_density_pixel"
+                android:layout_weight="1"
+                android:weightSum="1">
 
-            <!--add image view container-->
+            <!--recipe image view container-->
             <LinearLayout
                     android:id="@+id/recipe_image_view_container"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/one_hundred_eighty_density_pixel"
-                    android:layout_margin="@dimen/ten_density_pixel"
+                    android:layout_height="@dimen/one_hundred_fifty_density_pixel"
+                    android:layout_marginBottom="@dimen/ten_density_pixel"
                     android:gravity="center"
-                    android:background="@drawable/border_view_rectangle">
+                    android:background="@drawable/border_view_rectangle"
+                    android:layout_weight="1">
 
                 <ImageView
                         android:id="@+id/recipe_image"
@@ -42,20 +50,22 @@
 
             <!--meal category spinner container-->
             <LinearLayout
-                    android:id="@+id/recipe_meal_category"
                     android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="@dimen/ten_density_pixel">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/ten_density_pixel"
+                    android:padding="@dimen/ten_density_pixel"
+                    android:background="@drawable/border_view_rectangle"
+                    android:layout_weight="1">
 
                 <!-- Text Label -->
                 <TextView
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/spinner_title"
                         android:gravity="center"
-                        android:layout_marginBottom="5dp" />
+                        android:text="@string/spinner_title"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorIndigo500" />
 
                 <!-- Spinner Element -->
                 <Spinner
@@ -67,90 +77,163 @@
 
             </LinearLayout>
 
-            <!--recipe input edit text container-->
+            <!--recipe user input container-->
             <LinearLayout
-                    android:id="@+id/recipe_edit_container"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/ten_density_pixel"
-                    android:padding="@dimen/ten_density_pixel">
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/ten_density_pixel"
+                    android:padding="@dimen/ten_density_pixel"
+                    android:background="@drawable/border_view_rectangle"
+                    android:layout_weight="1">
 
-                <android.support.design.widget.TextInputLayout
+                <!-- recipe title container -->
+                <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                    <EditText
-                            android:id="@+id/recipe_title"
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorIndigo300"
+                            android:src="@drawable/ic_format_list_numbered_white_24dp" />
+
+                    <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="top"
-                            android:inputType="text|textCapWords"
-                            android:maxLines="1"
-                            android:textStyle="bold"
-                            android:hint="Enter Recipe Title"
-                            android:ems="10" />
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/ten_density_pixel">
 
-                </android.support.design.widget.TextInputLayout>
+                        <EditText
+                                android:id="@+id/recipe_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Enter Recipe Title"
+                                android:inputType="text|textCapCharacters|textCapWords"
+                                android:textStyle="bold"
+                                android:textAllCaps="true"
+                                android:maxLines="1"
+                                android:ems="10" />
 
-                <android.support.design.widget.TextInputLayout
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <!-- recipe ingredients container -->
+                <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                    <MultiAutoCompleteTextView
-                            android:id="@+id/recipe_ingredients"
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorIndigo300"
+                            android:src="@drawable/ic_format_list_numbered_white_24dp" />
+
+                    <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="top"
-                            android:inputType="text|textMultiLine|textCapWords"
-                            android:hint="Enter Recipe Ingredients"
-                            android:ems="10" />
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/ten_density_pixel">
 
-                </android.support.design.widget.TextInputLayout>
+                        <MultiAutoCompleteTextView
+                                android:id="@+id/recipe_ingredients"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter Recipe Ingredients"
+                                android:inputType="text|textMultiLine|textCapWords"
+                                android:ems="10" />
 
-                <android.support.design.widget.TextInputLayout
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <!-- recipe method container -->
+                <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                    <MultiAutoCompleteTextView
-                            android:id="@+id/recipe_method"
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorIndigo300"
+                            android:src="@drawable/ic_format_list_numbered_white_24dp" />
+
+                    <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="top"
-                            android:inputType="text|textMultiLine"
-                            android:hint="Enter Recipe Method"
-                            android:ems="10" />
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/ten_density_pixel">
 
-                </android.support.design.widget.TextInputLayout>
+                        <MultiAutoCompleteTextView
+                                android:id="@+id/recipe_method"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter Recipe Method"
+                                android:inputType="text|textMultiLine"
+                                android:ems="10" />
 
-                <android.support.design.widget.TextInputLayout
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <!-- recipe notes container -->
+                <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                    <MultiAutoCompleteTextView
-                            android:id="@+id/recipe_notes"
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorIndigo300"
+                            android:src="@drawable/ic_format_list_numbered_white_24dp" />
+
+                    <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="top"
-                            android:inputType="text|textMultiLine"
-                            android:hint="Enter Recipe Notes"
-                            android:ems="10" />
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/ten_density_pixel">
 
-                </android.support.design.widget.TextInputLayout>
+                        <MultiAutoCompleteTextView
+                                android:id="@+id/recipe_notes"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter Recipe Notes"
+                                android:inputType="text|textMultiLine"
+                                android:ems="10" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
-
-            <Button
-                    android:id="@+id/save_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="SAVE"
-                    android:textColor="@color/colorWhite"
-                    android:gravity="center"
-                    android:background="@color/colorIndigo500" />
 
         </LinearLayout>
 
     </ScrollView>
 
-</LinearLayout>
+    <!-- recipe save button container -->
+    <LinearLayout
+            android:id="@+id/recipe_save_button"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+        <Button
+                android:id="@+id/save_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SAVE"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:background="@color/colorIndigo500"
+                android:layout_alignParentBottom="true" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -205,7 +205,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         Toast.LENGTH_SHORT).show();
                 } else {
                     showProgress(false);
-
                     checkExistingUser();
                 }
                 // ...
@@ -409,7 +408,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
-
         addEmailsToAutoComplete(emails);
     }
 
@@ -426,7 +424,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         loginUserEmail.setAdapter(adapter);
     }
-
 
     private interface ProfileQuery {
 
@@ -457,8 +454,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
             //setup firebase here
             mAuth.signInWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -471,23 +466,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
                 }
             });
-
-//            try {
-//                // Simulate network access.
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                return false;
-//            }
-//
-//            for (String credential : DUMMY_CREDENTIALS) {
-//                String[] pieces = credential.split(":");
-//                if (pieces[0].equals(mEmail)) {
-//                    // Account exists, return true if the password matches.
-//                    return pieces[1].equals(mPassword);
-//                }
-//            }
-
-            // TODO: register the new account here.
             return true;
         }
 
