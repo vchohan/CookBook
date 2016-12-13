@@ -107,7 +107,7 @@
                                 android:id="@+id/recipe_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:hint="Enter Recipe Title"
+                                android:hint="Recipe Title"
                                 android:inputType="text|textCapCharacters|textCapWords"
                                 android:textStyle="bold"
                                 android:textAllCaps="true"
@@ -140,7 +140,7 @@
                                 android:id="@+id/recipe_ingredients"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Enter Recipe Ingredients"
+                                android:hint="Recipe Ingredients"
                                 android:inputType="text|textMultiLine|textCapWords"
                                 android:ems="10" />
 
@@ -170,7 +170,7 @@
                                 android:id="@+id/recipe_method"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Enter Recipe Method"
+                                android:hint="Recipe Method"
                                 android:inputType="text|textMultiLine"
                                 android:ems="10" />
 
@@ -200,7 +200,7 @@
                                 android:id="@+id/recipe_notes"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Enter Recipe Notes"
+                                android:hint="Recipe Notes"
                                 android:inputType="text|textMultiLine"
                                 android:ems="10" />
 

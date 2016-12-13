@@ -113,6 +113,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setUsername(model.getUsername());
 
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        
+                    }
+                });
+
             }
         };
         mRecipeRecyclerView.setAdapter(firebaseRecyclerAdapter);
