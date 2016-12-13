@@ -31,7 +31,7 @@
                 android:layout_weight="1"
                 android:weightSum="1">
 
-            <!-- profile image view container -->
+            <!-- login image view container -->
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -56,7 +56,7 @@
 
             </LinearLayout>
 
-            <!-- profile email container -->
+            <!-- login email container -->
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/ten_density_pixel"
                         android:background="@color/colorIndigo300"
-                        android:src="@drawable/ic_account_box_white_24dp" />
+                        android:src="@drawable/ic_email_white_24dp" />
 
                 <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -89,7 +89,7 @@
 
             </LinearLayout>
 
-            <!-- profile password container -->
+            <!-- login password container -->
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -131,7 +131,7 @@
                     android:layout_gravity="center"
                     android:gravity="center">
 
-                <!-- profile remember switch / login container -->
+                <!-- login remember switch / login container -->
                 <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
@@ -166,7 +166,7 @@
 
                 </LinearLayout>
 
-                <!-- profile register container -->
+                <!-- login register container -->
                 <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
@@ -192,7 +192,7 @@
 
                 </LinearLayout>
 
-                <!-- profile google sign in container -->
+                <!-- login google sign in container -->
                 <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"

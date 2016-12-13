@@ -17,10 +17,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+        <!-- recipe image container -->
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="160dp"
                 android:gravity="center">
 
             <ImageView
@@ -32,31 +33,55 @@
 
         </LinearLayout>
 
+        <!-- title text / username / options button container -->
         <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/ten_density_pixel"
-                android:gravity="center"
-                android:weightSum="1">
+                android:layout_weight="1">
 
-            <TextView
-                    android:id="@+id/recycler_recipe_title"
-                    android:layout_width="300dp"
+            <!-- title text / username / options button layout -->
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="asdfasdfasf"
-                    android:textSize="18sp"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical" />
+                    android:weightSum="1">
 
-            <ImageButton
-                    android:id="@+id/recycler_remove_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_blur_on_black_24dp"
-                    android:background="@android:color/transparent" />
+                <!-- title text / username layout -->
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="300dp"
+                        android:layout_height="match_parent">
+
+                    <TextView
+                            android:id="@+id/recycler_recipe_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/ten_density_pixel"
+                            android:text="recipe title"
+                            android:textSize="14sp"
+                            android:textAllCaps="true"
+                            android:textStyle="bold" />
+
+                    <TextView
+                            android:id="@+id/recycler_recipe_username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/ten_density_pixel"
+                            android:text="username"
+                            android:textSize="12sp"
+                            android:textAllCaps="true" />
+
+                </LinearLayout>
+
+                <ImageButton
+                        android:id="@+id/recycler_remove_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_blur_on_black_24dp"
+                        android:background="@android:color/transparent" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -2,20 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         tools:context="com.vchohan.cookbook.AddNewRecipeFragment">
 
     <!--recipe user input scroll view container-->
     <ScrollView
-            android:id="@+id/recipe_input_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"
             android:layout_above="@+id/recipe_save_button">
 
         <LinearLayout
-                android:id="@+id/recipe_input_container"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

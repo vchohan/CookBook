@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText registerUserName;
+    private EditText registerUserUsername;
 
     private EditText registerUserEmail;
 
@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         mProgressDialog = new ProgressDialog(this);
 
-        registerUserName = (EditText) findViewById(R.id.register_user_name);
+        registerUserUsername = (EditText) findViewById(R.id.register_user_username);
         registerUserEmail = (EditText) findViewById(R.id.register_user_email);
         registerUserPassword = (EditText) findViewById(R.id.register_user_password);
 
@@ -60,11 +60,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void startRegistrationProcess() {
 
-        final String userName = registerUserName.getText().toString().trim();
+        final String userUsername = registerUserUsername.getText().toString().trim();
         String userEmail = registerUserEmail.getText().toString().trim();
         String userPassword = registerUserPassword.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(userEmail) && !TextUtils.isEmpty(userPassword)) {
+        if (!TextUtils.isEmpty(userUsername) && !TextUtils.isEmpty(userEmail) && !TextUtils.isEmpty(userPassword)) {
 
             mProgressDialog.setMessage("Please wait while we register your account.");
             mProgressDialog.show();
@@ -76,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                         String userId = mAuth.getCurrentUser().getUid();
 
                         DatabaseReference currentUserDatabase = mDatabase.child(userId);
-                        currentUserDatabase.child("name").setValue(userName);
+                        currentUserDatabase.child("username").setValue(userUsername);
                         currentUserDatabase.child("image").setValue("default");
 
                         mProgressDialog.dismiss();

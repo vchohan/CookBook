@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } else {
                     new RegisterActivity().finish();
                 }
-
             }
         };
 
@@ -110,8 +109,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             RecipeViewHolder>(RecipeUtils.class, R.layout.main_recipe_custom_card_view, RecipeViewHolder.class, mDatabase) {
             @Override
             protected void populateViewHolder(RecipeViewHolder viewHolder, RecipeUtils model, int position) {
-                viewHolder.setTitle(model.getTitle());
                 viewHolder.setImage(getApplicationContext(), model.getImage());
+                viewHolder.setTitle(model.getTitle());
+                viewHolder.setUsername(model.getUsername());
+
             }
         };
         mRecipeRecyclerView.setAdapter(firebaseRecyclerAdapter);
@@ -171,15 +172,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mView = itemView;
         }
 
+        public void setImage(Context context, String image) {
+            ImageView recipeImage = (ImageView) mView.findViewById(R.id.recycler_recipe_image);
+            Picasso.with(context).load(image).into(recipeImage);
+        }
+
         public void setTitle(String title) {
             TextView recyclerRecipeTitle = (TextView) mView.findViewById(R.id.recycler_recipe_title);
             recyclerRecipeTitle.setText(title);
         }
 
-        public void setImage(Context context, String image) {
-            ImageView recipeImage = (ImageView) mView.findViewById(R.id.recycler_recipe_image);
-            Picasso.with(context).load(image).into(recipeImage);
+        public void setUsername(String username) {
+            TextView recyclerRecipeUsername = (TextView) mView.findViewById(R.id.recycler_recipe_username);
+            recyclerRecipeUsername.setText(username);
         }
+
     }
 
     private void setupRecipeTipsCardView() {
