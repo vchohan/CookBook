@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,9 +58,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseRecipes;
 
     private DatabaseReference mDatabaseUsers;
+
+    private DatabaseReference mDatabaseLikes;
+
+    private boolean mProcessLike = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +85,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Recipe");
-        mDatabase.keepSynced(true);
+        mDatabaseRecipes = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        mDatabaseRecipes.keepSynced(true);
 
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseUsers.keepSynced(true);
+
+        mDatabaseLikes = FirebaseDatabase.getInstance().getReference().child("Likes");
+        mDatabaseLikes.keepSynced(true);
 
         //setup recipe recyclerView
         mRecipeRecyclerView = (RecyclerView) findViewById(R.id.recipe_recycler_view);
@@ -107,27 +115,137 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth.addAuthStateListener(mAuthListener);
         FirebaseRecyclerAdapter<RecipeUtils, RecipeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<RecipeUtils,
-            RecipeViewHolder>(RecipeUtils.class, R.layout.main_recipe_custom_card_view, RecipeViewHolder.class, mDatabase) {
+            RecipeViewHolder>(RecipeUtils.class, R.layout.main_recipe_custom_card_view, RecipeViewHolder.class, mDatabaseRecipes) {
             @Override
             protected void populateViewHolder(RecipeViewHolder viewHolder, RecipeUtils model, int position) {
 
-                final String recipeKey = getRef(position).toString();
+                final String recipeKey = getRef(position).getKey();
 
                 viewHolder.setImage(getApplicationContext(), model.getImage());
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setUsername(model.getUsername());
 
+                viewHolder.setLikeButton(recipeKey);
+
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         Toast.makeText(MainActivity.this, recipeKey, Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                viewHolder.mLikeButtonOne.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        mProcessLike = true;
+
+                        mDatabaseLikes.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                if (mProcessLike) {
+                                    if (dataSnapshot.child(recipeKey).hasChild(mAuth.getCurrentUser().getUid())) {
+                                        mDatabaseLikes.child(recipeKey).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                        mProcessLike = false;
+                                    } else {
+                                        mDatabaseLikes.child(recipeKey).child(mAuth.getCurrentUser().getUid()).setValue("RandomValue");
+                                        mProcessLike = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+                });
+
+                viewHolder.mLikeButtonTwo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        mProcessLike = true;
+                    }
+                });
+
+                viewHolder.mLikeButtonThree.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        mProcessLike = true;
                     }
                 });
 
             }
         };
         mRecipeRecyclerView.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
+
+        View mView;
+
+        ImageButton mRemoveButton;
+
+        ImageButton mLikeButtonOne, mLikeButtonTwo, mLikeButtonThree;
+
+        DatabaseReference mDatabaseLikes;
+
+        FirebaseAuth mAuth;
+
+        public RecipeViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+
+            mRemoveButton = (ImageButton) mView.findViewById(R.id.recycler_options_button);
+
+            mLikeButtonOne = (ImageButton) mView.findViewById(R.id.recycler_like_button_one);
+            mLikeButtonTwo = (ImageButton) mView.findViewById(R.id.recycler_like_button_two);
+            mLikeButtonThree = (ImageButton) mView.findViewById(R.id.recycler_like_button_three);
+
+            mDatabaseLikes = FirebaseDatabase.getInstance().getReference().child("Likes");
+            mAuth = FirebaseAuth.getInstance();
+
+            mDatabaseLikes.keepSynced(true);
+        }
+
+        public void setImage(Context context, String image) {
+            ImageView recipeImage = (ImageView) mView.findViewById(R.id.recycler_recipe_image);
+            Picasso.with(context).load(image).into(recipeImage);
+        }
+
+        public void setTitle(String title) {
+            TextView recyclerRecipeTitle = (TextView) mView.findViewById(R.id.recycler_recipe_title);
+            recyclerRecipeTitle.setText(title);
+        }
+
+        public void setUsername(String username) {
+            TextView recyclerRecipeUsername = (TextView) mView.findViewById(R.id.recycler_recipe_username);
+            recyclerRecipeUsername.setText(username);
+        }
+
+        public void setLikeButton(final String recipeKey) {
+            mDatabaseLikes.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.child(recipeKey).hasChild(mAuth.getCurrentUser().getUid())) {
+                        mLikeButtonOne.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                    } else {
+                        mLikeButtonOne.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     private void setupToolBarAndNavigationDrawer() {
@@ -173,32 +291,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
         }
-    }
-
-    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
-
-        View mView;
-
-        public RecipeViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
-        }
-
-        public void setImage(Context context, String image) {
-            ImageView recipeImage = (ImageView) mView.findViewById(R.id.recycler_recipe_image);
-            Picasso.with(context).load(image).into(recipeImage);
-        }
-
-        public void setTitle(String title) {
-            TextView recyclerRecipeTitle = (TextView) mView.findViewById(R.id.recycler_recipe_title);
-            recyclerRecipeTitle.setText(title);
-        }
-
-        public void setUsername(String username) {
-            TextView recyclerRecipeUsername = (TextView) mView.findViewById(R.id.recycler_recipe_username);
-            recyclerRecipeUsername.setText(username);
-        }
-
     }
 
     private void setupRecipeTipsCardView() {

@@ -48,17 +48,19 @@
                     android:paddingLeft="@dimen/ten_density_pixel"
                     android:layout_gravity="center">
 
+                <!-- options button-->
                 <ImageButton
-                        android:id="@+id/recycler_remove_button"
+                        android:id="@+id/recycler_options_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_blur_on_black_24dp"
                         android:background="@android:color/transparent" />
 
+                <!-- recipe title / username-->
                 <LinearLayout
                         android:orientation="vertical"
-                        android:layout_width="match_parent"
+                        android:layout_width="200dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/ten_density_pixel"
                         android:gravity="center">
@@ -81,6 +83,36 @@
                             android:text="username"
                             android:textSize="12sp"
                             android:textAllCaps="true" />
+
+                </LinearLayout>
+
+                <!-- like buttons-->
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/ten_density_pixel">
+
+                    <ImageButton
+                            android:id="@+id/recycler_like_button_one"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_favorite_border_black_24dp"
+                            android:background="@android:color/transparent" />
+
+                    <ImageButton
+                            android:id="@+id/recycler_like_button_two"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_favorite_border_black_24dp"
+                            android:background="@android:color/transparent" />
+
+                    <ImageButton
+                            android:id="@+id/recycler_like_button_three"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_favorite_border_black_24dp"
+                            android:background="@android:color/transparent" />
 
                 </LinearLayout>
 
