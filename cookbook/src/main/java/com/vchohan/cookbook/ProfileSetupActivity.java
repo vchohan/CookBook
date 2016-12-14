@@ -27,7 +27,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
 
     private ImageButton profileSetupImage;
 
-    private EditText profileSetupName;
+    private EditText profileSetupUsername;
 
     private Button profileSubmitButton;
 
@@ -56,7 +56,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
 
         profileSetupImage = (ImageButton) findViewById(R.id.profileSetupImage);
-        profileSetupName = (EditText) findViewById(R.id.profileSetupName);
+        profileSetupUsername = (EditText) findViewById(R.id.profileSetupUsername);
 
         profileSubmitButton = (Button) findViewById(R.id.profileSubmitButton);
         profileSubmitButton.setOnClickListener(new View.OnClickListener() {
@@ -81,10 +81,10 @@ public class ProfileSetupActivity extends AppCompatActivity {
 
     private void submitProfileSetupAccount() {
 
-        final String name = profileSetupName.getText().toString().trim();
+        final String username = profileSetupUsername.getText().toString().trim();
         final String userId = mAuth.getCurrentUser().getUid();
 
-        if (!TextUtils.isEmpty(name) && mImageUri != null) {
+        if (!TextUtils.isEmpty(username) && mImageUri != null) {
             showProgressDialog();
 
             StorageReference filePath = mStorage.child(mImageUri.getLastPathSegment());
@@ -96,7 +96,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
 
                     String downlaodUri = taskSnapshot.getDownloadUrl().toString();
 
-                    mDatabaseUsers.child(userId).child("name").setValue(name);
+                    mDatabaseUsers.child(userId).child("username").setValue(username);
                     mDatabaseUsers.child(userId).child("image").setValue(downlaodUri);
 
                     hideProgressDialog();
@@ -107,7 +107,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
                 }
             });
         } else {
-            String toastText = "Please select you profile image and enter your name.";
+            String toastText = "Please select you profile image and enter your username.";
             Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
         }
     }

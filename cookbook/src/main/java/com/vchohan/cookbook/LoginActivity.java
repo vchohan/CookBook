@@ -201,10 +201,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // signed in user can be handled in the listener.
                 if (!task.isSuccessful()) {
                     Log.w(TAG, "signInWithCredential", task.getException());
-                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+
                 } else {
                     showProgress(false);
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
                     checkExistingUser();
                 }
                 // ...
@@ -319,13 +321,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         startActivity(mainIntent);
                     } else {
                         showProgress(false);
-                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
+                        Intent setupIntent = new Intent(LoginActivity.this, ProfileSetupActivity.class);
+                        setupIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(setupIntent);
 
-                        if (mAuth.getCurrentUser().getDisplayName() == null || mAuth.getCurrentUser().getPhotoUrl() == null) {
-                            Intent setupIntent = new Intent(LoginActivity.this, ProfileSetupActivity.class);
-                            setupIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(setupIntent);
-                        }
                     }
                 }
 

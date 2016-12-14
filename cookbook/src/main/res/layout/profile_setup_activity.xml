@@ -17,11 +17,11 @@
             android:background="@drawable/border_view_circle" />
 
     <EditText
-            android:id="@+id/profileSetupName"
+            android:id="@+id/profileSetupUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="Enter you name..."
+            android:hint="Please enter a username..."
             android:gravity="center"
             android:ems="10" />
 

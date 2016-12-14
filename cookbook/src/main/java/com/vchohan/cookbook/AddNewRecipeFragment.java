@@ -229,7 +229,7 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
                             newRecipe.child(keyNotes).setValue(valueNotes);
 
                             newRecipe.child("uid").setValue(mCurrentUser.getUid());
-                            newRecipe.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(
+                            newRecipe.child("username").setValue(dataSnapshot.child("username").getValue()).addOnCompleteListener(
                                 new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
