@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.squareup.picasso.Picasso;
@@ -109,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             RecipeViewHolder>(RecipeUtils.class, R.layout.main_recipe_custom_card_view, RecipeViewHolder.class, mDatabase) {
             @Override
             protected void populateViewHolder(RecipeViewHolder viewHolder, RecipeUtils model, int position) {
+
+                final String recipeKey = getRef(position).toString();
+
                 viewHolder.setImage(getApplicationContext(), model.getImage());
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setUsername(model.getUsername());
@@ -116,7 +120,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        
+
+                        Toast.makeText(MainActivity.this, recipeKey, Toast.LENGTH_LONG).show();
                     }
                 });
 
