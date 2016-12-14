@@ -234,9 +234,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     if (dataSnapshot.child(recipeKey).hasChild(mAuth.getCurrentUser().getUid())) {
-                        mLikeButtonOne.setImageResource(R.drawable.ic_favorite_border_white_24dp);
-                    } else {
                         mLikeButtonOne.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                        mLikeButtonTwo.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                        mLikeButtonThree.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+
+
+                    } else {
+                        mLikeButtonOne.setImageResource(R.drawable.ic_favorite_border_pink_24dp);
+                        mLikeButtonTwo.setImageResource(R.drawable.ic_favorite_border_pink_24dp);
+                        mLikeButtonThree.setImageResource(R.drawable.ic_favorite_border_pink_24dp);
+
                     }
                 }
 
