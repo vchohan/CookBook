@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
 
-                viewHolder.mLikeButtonOne.setOnClickListener(new View.OnClickListener() {
+                viewHolder.mLikeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mDatabaseLikes.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-
                                 if (mProcessLike) {
                                     if (dataSnapshot.child(recipeKey).hasChild(mAuth.getCurrentUser().getUid())) {
                                         mDatabaseLikes.child(recipeKey).child(mAuth.getCurrentUser().getUid()).removeValue();
@@ -160,26 +159,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                             }
                         });
-
                     }
                 });
-
-                viewHolder.mLikeButtonTwo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        mProcessLike = true;
-                    }
-                });
-
-                viewHolder.mLikeButtonThree.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        mProcessLike = true;
-                    }
-                });
-
             }
         };
         mRecipeRecyclerView.setAdapter(firebaseRecyclerAdapter);
@@ -191,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ImageButton mRemoveButton;
 
-        ImageButton mLikeButtonOne, mLikeButtonTwo, mLikeButtonThree;
+        ImageButton mLikeButton;
 
         DatabaseReference mDatabaseLikes;
 
@@ -203,9 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             mRemoveButton = (ImageButton) mView.findViewById(R.id.recycler_options_button);
 
-            mLikeButtonOne = (ImageButton) mView.findViewById(R.id.recycler_like_button_one);
-            mLikeButtonTwo = (ImageButton) mView.findViewById(R.id.recycler_like_button_two);
-            mLikeButtonThree = (ImageButton) mView.findViewById(R.id.recycler_like_button_three);
+            mLikeButton = (ImageButton) mView.findViewById(R.id.recycler_like_button_one);
 
             mDatabaseLikes = FirebaseDatabase.getInstance().getReference().child("Likes");
             mAuth = FirebaseAuth.getInstance();
@@ -234,16 +213,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     if (dataSnapshot.child(recipeKey).hasChild(mAuth.getCurrentUser().getUid())) {
-                        mLikeButtonOne.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                        mLikeButtonTwo.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                        mLikeButtonThree.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-
-
+                        mLikeButton.setImageResource(R.drawable.ic_favorite_border_pink_24dp);
                     } else {
-                        mLikeButtonOne.setImageResource(R.drawable.ic_favorite_border_pink_24dp);
-                        mLikeButtonTwo.setImageResource(R.drawable.ic_favorite_border_pink_24dp);
-                        mLikeButtonThree.setImageResource(R.drawable.ic_favorite_border_pink_24dp);
-
+                        mLikeButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                     }
                 }
 
