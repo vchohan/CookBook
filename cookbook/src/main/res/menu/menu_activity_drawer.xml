@@ -33,4 +33,13 @@
         </menu>
     </item>
 
+    <item android:title="Settings">
+        <menu>
+            <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/ic_settings_black_24dp"
+                    android:title="Profile Setup" />
+        </menu>
+    </item>
+
 </menu>

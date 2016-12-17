@@ -1,17 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/two_hundred_density_pixel"
-        android:background="@drawable/border_view_rectangle"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:orientation="vertical"
-        android:gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one_hundred_fifty_density_pixel"
+        android:background="@color/colorIndigo900"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-            android:id="@+id/imageView"
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/one_hundred_fifty_density_pixel"
-            app:srcCompat="@drawable/app_icon" />
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/twenty_density_pixel"
+                android:gravity="bottom">
+
+            <ImageButton
+                    android:id="@+id/profileSetupImage"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/border_view_circle_pink" />
+
+            <TextView
+                    android:id="@+id/profile_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="username"
+                    android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+
+        <ImageButton
+                android:id="@+id/home_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/twenty_density_pixel"
+                android:background="@drawable/ic_home_white_24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/twenty_density_pixel"
+                android:layout_marginBottom="@dimen/twenty_density_pixel" />
+
+    </RelativeLayout>
 
 </LinearLayout>

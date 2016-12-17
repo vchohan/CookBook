@@ -1,34 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/profile_setup_activity"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/twenty_density_pixel"
+        android:layout_gravity="center"
         tools:context="com.vchohan.cookbook.ProfileSetupActivity">
 
-    <ImageButton
-            android:id="@+id/profileSetupImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/twenty_density_pixel"
-            android:background="@drawable/border_view_circle" />
+    <!--recipe user input scroll view container-->
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:layout_above="@+id/profile_submit_button">
 
-    <EditText
-            android:id="@+id/profileSetupUsername"
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/ten_density_pixel"
+                android:layout_weight="1"
+                android:weightSum="1">
+
+            <ImageButton
+                    android:id="@+id/profileSetupImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/twenty_density_pixel"
+                    android:background="@drawable/border_view_circle_indigo" />
+
+            <!-- profile username container -->
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten_density_pixel"
+                    android:gravity="center"
+                    android:background="@drawable/border_view_rectangle">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/ten_density_pixel"
+                        android:background="@color/colorIndigo300"
+                        android:src="@drawable/ic_person_white_24dp" />
+
+                <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/five_density_pixel">
+
+                    <EditText
+                            android:id="@+id/profileSetupUsername"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Username..."
+                            android:inputType="textPersonName"
+                            android:textAllCaps="false"
+                            android:imeOptions="actionGo" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- profile submit button container -->
+    <LinearLayout
+            android:id="@+id/profile_submit_button"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="Please enter a username..."
-            android:gravity="center"
-            android:ems="10" />
+            android:layout_alignParentBottom="true">
 
-    <Button
-            android:id="@+id/profileSubmitButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Submit" />
+        <Button
+                android:id="@+id/profileSubmitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="SUBMIT"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorIndigo500"
+                android:layout_alignParentBottom="true" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
