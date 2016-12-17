@@ -10,6 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+        <!-- nav profile image / username container -->
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
@@ -17,14 +18,17 @@
                 android:layout_margin="@dimen/twenty_density_pixel"
                 android:gravity="bottom">
 
-            <ImageButton
-                    android:id="@+id/profileSetupImage"
+            <ImageView
+                    android:id="@+id/nav_profile_image"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:padding="@dimen/ten_density_pixel"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_person_white_24dp"
                     android:background="@drawable/border_view_circle_pink" />
 
             <TextView
-                    android:id="@+id/profile_username"
+                    android:id="@+id/nav_profile_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -33,16 +37,15 @@
 
         </LinearLayout>
 
-        <ImageButton
-                android:id="@+id/home_image"
+        <TextView
+                android:id="@+id/nav_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/twenty_density_pixel"
-                android:background="@drawable/ic_home_white_24dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/twenty_density_pixel"
-                android:layout_marginBottom="@dimen/twenty_density_pixel" />
+                android:text="Logout"
+                android:textColor="@color/colorWhite"
+                android:layout_marginEnd="22dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

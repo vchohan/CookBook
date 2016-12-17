@@ -17,7 +17,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -25,7 +25,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class ProfileSetupActivity extends AppCompatActivity {
 
-    private ImageButton profileSetupImage;
+    private ImageView profileSetupImage;
 
     private EditText profileSetupUsername;
 
@@ -55,10 +55,10 @@ public class ProfileSetupActivity extends AppCompatActivity {
         mStorage = FirebaseStorage.getInstance().getReference().child("ProfileImages");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        profileSetupImage = (ImageButton) findViewById(R.id.profileSetupImage);
-        profileSetupUsername = (EditText) findViewById(R.id.profileSetupUsername);
+        profileSetupImage = (ImageView) findViewById(R.id.profile_setup_image);
+        profileSetupUsername = (EditText) findViewById(R.id.profile_setup_username);
 
-        profileSubmitButton = (Button) findViewById(R.id.profileSubmitButton);
+        profileSubmitButton = (Button) findViewById(R.id.profile_submit_button);
         profileSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,8 +96,8 @@ public class ProfileSetupActivity extends AppCompatActivity {
 
                     String downlaodUri = taskSnapshot.getDownloadUrl().toString();
 
-                    mDatabaseUsers.child(userId).child("username").setValue(username);
                     mDatabaseUsers.child(userId).child("image").setValue(downlaodUri);
+                    mDatabaseUsers.child(userId).child("username").setValue(username);
 
                     hideProgressDialog();
 

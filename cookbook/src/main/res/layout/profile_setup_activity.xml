@@ -11,22 +11,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"
-            android:layout_above="@+id/profile_submit_button">
+            android:layout_above="@+id/profile_submit_container">
 
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/ten_density_pixel"
-                android:layout_weight="1"
-                android:weightSum="1">
+                android:layout_margin="@dimen/twenty_density_pixel"
+                android:gravity="bottom">
 
-            <ImageButton
-                    android:id="@+id/profileSetupImage"
+            <ImageView
+                    android:id="@+id/profile_setup_image"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/twenty_density_pixel"
+                    android:padding="@dimen/ten_density_pixel"
+                    android:src="@drawable/ic_person_white_24dp"
                     android:background="@drawable/border_view_circle_indigo" />
 
             <!-- profile username container -->
@@ -34,7 +34,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ten_density_pixel"
+                    android:layout_margin="@dimen/ten_density_pixel"
                     android:gravity="center"
                     android:background="@drawable/border_view_rectangle">
 
@@ -51,7 +51,7 @@
                         android:layout_margin="@dimen/five_density_pixel">
 
                     <EditText
-                            android:id="@+id/profileSetupUsername"
+                            android:id="@+id/profile_setup_username"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Username..."
@@ -69,14 +69,14 @@
 
     <!-- profile submit button container -->
     <LinearLayout
-            android:id="@+id/profile_submit_button"
+            android:id="@+id/profile_submit_container"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true">
 
         <Button
-                android:id="@+id/profileSubmitButton"
+                android:id="@+id/profile_submit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

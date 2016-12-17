@@ -487,4 +487,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
+        this.finishAffinity();
+    }
 }

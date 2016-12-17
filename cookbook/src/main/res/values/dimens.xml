@@ -10,6 +10,10 @@
     <dimen name="one_hundred_fifty_density_pixel">150dp</dimen>
     <dimen name="one_hundred_eighty_density_pixel">180dp</dimen>
     <dimen name="two_hundred_density_pixel">200dp</dimen>
+    <dimen name="two_hundred_fifty_density_pixel">250dp</dimen>
+    <dimen name="two_hundred_eighty_density_pixel">280dp</dimen>
+    <dimen name="three_hundred_density_pixel">300dp</dimen>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

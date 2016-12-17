@@ -26,16 +26,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
+
+    private NavigationView mNavigationView;
+
+    private DrawerLayout mDrawerLayout;
+
+    private View mNavigationHeader;
+
+    private Toolbar mToolbar;
+
+    private FloatingActionButton mFab;
 
     private RecyclerView mRecipeRecyclerView;
 
@@ -64,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean mProcessLike = false;
 
     private ProgressDialog mProgressDialog;
+
+    private ImageView navProfileImage;
+
+    private TextView navProfileUsername, navLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +120,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mRecipeRecyclerView.setHasFixedSize(true);
         mRecipeRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+        navProfileImage = (ImageView) findViewById(R.id.nav_profile_image);
+        navProfileUsername = (TextView) findViewById(R.id.nav_profile_username);
+        navLogout = (TextView) findViewById(R.id.nav_logout);
+
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newRecipeIntent = new Intent(getApplicationContext(), AddNewRecipeActivity.class);
+                newRecipeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(newRecipeIntent);
+            }
+        });
 
         setupToolBarAndNavigationDrawer();
         setupRecipeTipsCardView();
@@ -210,25 +240,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setupToolBarAndNavigationDrawer() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        // Navigation view header
+        mNavigationHeader = mNavigationView.getHeaderView(0);
+        if (mAuth.getCurrentUser() != null) {
+            final String userId = mAuth.getCurrentUser().getUid();
+
+            mDatabaseUsers.child(userId).child("username").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    navProfileUsername = (TextView) mNavigationHeader.findViewById(R.id.nav_profile_username);
+                    navProfileUsername.setText(dataSnapshot.getValue(String.class));
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            mDatabaseUsers.child(userId).child("image").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    navProfileImage = (ImageView) mNavigationHeader.findViewById(R.id.nav_profile_image);
+                    String image = dataSnapshot.getValue(String.class);
+                    Picasso.with(getApplicationContext()).load(image).into(navProfileImage);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        navLogout = (TextView) mNavigationHeader.findViewById(R.id.nav_logout);
+        navLogout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent newRecipeIntent = new Intent(getApplicationContext(), AddNewRecipeActivity.class);
-                newRecipeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(newRecipeIntent);
+            public void onClick(View v) {
+                logout();
             }
         });
     }
@@ -261,9 +322,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -284,6 +345,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_logout) {
+            new MainActivity().finish();
             logout();
             return true;
         }
@@ -319,15 +381,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(setupIntent);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("Please wait while we save your recipe...");
+            mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(true);
         }
         mProgressDialog.show();
@@ -337,5 +399,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

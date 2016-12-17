@@ -26,8 +26,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/twenty_density_pixel"
-                android:layout_weight="1">
+                android:layout_margin="@dimen/twenty_density_pixel">
 
             <!-- login image view container -->
             <LinearLayout
@@ -35,21 +34,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                <ImageButton
-                        android:id="@+id/profileImage"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/ten_density_pixel"
-                        android:src="@drawable/ic_person_white_24dp"
-                        android:background="@drawable/border_view_circle_indigo"/>
-
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:layout_marginBottom="@dimen/twenty_density_pixel"
-                        android:text="SWITCH PROFILE"/>
+                        android:src="@drawable/cook_book"/>
 
             </LinearLayout>
 
@@ -120,7 +110,7 @@
 
             </LinearLayout>
 
-            <!-- login / register / sign-in button container -->
+            <!-- login / register / google sign-in button container -->
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -165,27 +155,25 @@
 
                 <!-- login register container -->
                 <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:weightSum="1">
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_margin="@dimen/twenty_density_pixel">
 
                     <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/ten_density_pixel"
                             android:text="@string/register_text"/>
 
-                    <Button
+                    <TextView
                             android:id="@+id/login_register_button"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="@dimen/ten_density_pixel"
-                            android:background="@color/colorIndigo500"
-                            android:elevation="24dp"
+                            android:paddingLeft="@dimen/ten_density_pixel"
                             android:text="@string/action_register"
-                            android:textColor="@color/colorWhite"/>
+                            android:textStyle="bold"
+                            android:textColor="@color/colorIndigo500"/>
 
                 </LinearLayout>
 
@@ -193,9 +181,7 @@
                 <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:weightSum="1">
+                        android:layout_height="match_parent">
 
                     <TextView
                             android:layout_width="wrap_content"
