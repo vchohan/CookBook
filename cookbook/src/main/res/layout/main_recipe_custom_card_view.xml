@@ -33,76 +33,63 @@
 
         </LinearLayout>
 
-        <!-- title text / username / options button container -->
+        <!-- options button / title / username / like button -->
         <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:weightSum="3">
 
-            <!-- title text / username / options button layout -->
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+            <!-- options button-->
+            <ImageButton
+                    android:id="@+id/recycler_options_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:paddingLeft="@dimen/ten_density_pixel"
-                    android:layout_gravity="center">
+                    android:src="@drawable/ic_blur_on_black_24dp"
+                    android:background="@android:color/transparent" />
 
-                <!-- options button-->
-                <ImageButton
-                        android:id="@+id/recycler_options_button"
-                        android:layout_width="wrap_content"
+            <!-- recipe title / username-->
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/ten_density_pixel"
+                    android:gravity="center">
+
+                <TextView
+                        android:id="@+id/recycler_recipe_title"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_blur_on_black_24dp"
-                        android:background="@android:color/transparent" />
+                        android:text="recipe title"
+                        android:textSize="14sp"
+                        android:textAllCaps="true"
+                        android:textStyle="bold" />
 
-                <!-- recipe title / username-->
-                <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="270dp"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="@dimen/ten_density_pixel"
-                        android:gravity="center">
-
-                    <TextView
-                            android:id="@+id/recycler_recipe_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="recipe title"
-                            android:textSize="14sp"
-                            android:textAllCaps="true"
-                            android:textStyle="bold" />
-
-                    <TextView
-                            android:id="@+id/recycler_recipe_username"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="username"
-                            android:textSize="12sp"
-                            android:textAllCaps="true" />
-
-                </LinearLayout>
-
-                <!-- like buttons-->
-                <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
+                <TextView
+                        android:id="@+id/recycler_recipe_username"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center">
-
-                    <ImageButton
-                            android:id="@+id/recycler_like_button_one"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_favorite_border_pink_24dp"
-                            android:background="@android:color/transparent" />
-
-                </LinearLayout>
+                        android:layout_gravity="center"
+                        android:text="username"
+                        android:textSize="12sp" />
 
             </LinearLayout>
+
+            <!-- like buttons-->
+            <ImageButton
+                    android:id="@+id/recycler_like_button_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:paddingRight="@dimen/ten_density_pixel"
+                    android:src="@drawable/ic_favorite_border_pink_24dp"
+                    android:background="@android:color/transparent" />
 
         </LinearLayout>
 

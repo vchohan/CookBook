@@ -7,7 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,13 +26,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.squareup.picasso.Picasso;
 
 import java.util.Random;
 
@@ -66,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private boolean mProcessLike = false;
 
+    private ProgressDialog mProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         };
+
+        mAuth.addAuthStateListener(mAuthListener);
 
         mDatabaseRecipes = FirebaseDatabase.getInstance().getReference().child("Recipe");
         mDatabaseRecipes.keepSynced(true);
@@ -112,12 +113,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
+        setupFirebaseRecyclerView();
+    }
 
-        mAuth.addAuthStateListener(mAuthListener);
-        FirebaseRecyclerAdapter<RecipeUtils, RecipeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<RecipeUtils,
-            RecipeViewHolder>(RecipeUtils.class, R.layout.main_recipe_custom_card_view, RecipeViewHolder.class, mDatabaseRecipes) {
+    private void setupFirebaseRecyclerView() {
+        showProgressDialog();
+        final FirebaseRecyclerAdapter<RecipeUtils, MainRecipeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<RecipeUtils,
+            MainRecipeViewHolder>(RecipeUtils.class, R.layout.main_recipe_custom_card_view, MainRecipeViewHolder.class, mDatabaseRecipes) {
             @Override
-            protected void populateViewHolder(RecipeViewHolder viewHolder, RecipeUtils model, int position) {
+            protected void populateViewHolder(MainRecipeViewHolder viewHolder, RecipeUtils model, int position) {
 
                 final String recipeKey = getRef(position).getKey();
 
@@ -163,59 +167,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
             }
         };
+
+        firebaseRecyclerAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                hideProgressDialog();
+                int friendlyMessageCount = firebaseRecyclerAdapter.getItemCount();
+                int lastVisiblePosition = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
+                // If the recycler view is initially being loaded or the
+                // user is at the bottom of the list, scroll to the bottom
+                // of the list to show the newly added message.
+                if (lastVisiblePosition == -1 ||
+                    (positionStart >= (friendlyMessageCount - 1) &&
+                        lastVisiblePosition == (positionStart - 1))) {
+                    mLinearLayoutManager.scrollToPosition(positionStart);
+                }
+            }
+        });
         mRecipeRecyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
-
-        View mView;
-
-        ImageButton mRemoveButton;
-
-        ImageButton mLikeButton;
-
-        DatabaseReference mDatabaseLikes;
-
-        FirebaseAuth mAuth;
-
-        public RecipeViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
-
-            mRemoveButton = (ImageButton) mView.findViewById(R.id.recycler_options_button);
-
-            mLikeButton = (ImageButton) mView.findViewById(R.id.recycler_like_button_one);
-
-            mDatabaseLikes = FirebaseDatabase.getInstance().getReference().child("Likes");
-            mAuth = FirebaseAuth.getInstance();
-
-            mDatabaseLikes.keepSynced(true);
-        }
-
-        public void setImage(Context context, String image) {
-            ImageView recipeImage = (ImageView) mView.findViewById(R.id.recycler_recipe_image);
-            Picasso.with(context).load(image).into(recipeImage);
-        }
-
-        public void setTitle(String title) {
-            TextView recyclerRecipeTitle = (TextView) mView.findViewById(R.id.recycler_recipe_title);
-            recyclerRecipeTitle.setText(title);
-        }
-
-        public void setUsername(String username) {
-            TextView recyclerRecipeUsername = (TextView) mView.findViewById(R.id.recycler_recipe_username);
-            recyclerRecipeUsername.setText(username);
-        }
-
-        public void setLikeButton(final String recipeKey) {
-            mDatabaseLikes.addValueEventListener(new ValueEventListener() {
+    private void checkExistingUser() {
+        if (mAuth.getCurrentUser() != null) {
+            final String userId = mAuth.getCurrentUser().getUid();
+            mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    if (dataSnapshot.child(recipeKey).hasChild(mAuth.getCurrentUser().getUid())) {
-                        mLikeButton.setImageResource(R.drawable.ic_favorite_border_pink_24dp);
-                    } else {
-                        mLikeButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    if (dataSnapshot.hasChild(userId)) {
+                        Intent setupIntent = new Intent(MainActivity.this, ProfileSetupActivity.class);
+                        setupIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(setupIntent);
                     }
                 }
 
@@ -249,27 +231,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void checkExistingUser() {
-        if (mAuth.getCurrentUser() != null) {
-            final String userId = mAuth.getCurrentUser().getUid();
-            mDatabaseUsers.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.hasChild(userId)) {
-                        Intent setupIntent = new Intent(MainActivity.this, ProfileSetupActivity.class);
-                        setupIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(setupIntent);
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
     }
 
     private void setupRecipeTipsCardView() {
@@ -357,5 +318,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage("Please wait while we save your recipe...");
+            mProgressDialog.setIndeterminate(true);
+        }
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 }
