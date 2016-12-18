@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
     private void setProgressBar() {
         for (int progress = 0; progress < 100; progress += 10) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 mProgressView.setProgress(progress);
             } catch (Exception e) {
                 e.printStackTrace();

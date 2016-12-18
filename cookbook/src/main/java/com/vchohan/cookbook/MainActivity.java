@@ -28,7 +28,6 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -165,7 +164,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(MainActivity.this, recipeKey, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(MainActivity.this, recipeKey, Toast.LENGTH_LONG).show();
+                        Intent addRecipeIntent = new Intent(MainActivity.this, SingleRecipeActivity.class);
+                        addRecipeIntent.putExtra("recipeId", recipeKey);
+                        addRecipeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(addRecipeIntent);
                     }
                 });
 
