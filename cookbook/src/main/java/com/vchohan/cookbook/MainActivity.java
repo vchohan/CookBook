@@ -30,8 +30,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.squareup.picasso.Picasso;
 
 import java.util.Random;
 
@@ -275,7 +276,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     navProfileImage = (ImageView) mNavigationHeader.findViewById(R.id.nav_profile_image);
                     String image = dataSnapshot.getValue(String.class);
-                    Picasso.with(getApplicationContext()).load(image).into(navProfileImage);
+                    Glide.with(getApplicationContext()).load(image)
+                        .crossFade()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(navProfileImage);
+
+                    // Loading profile image
+                    Glide.with(getApplicationContext()).load(image)
+                        .crossFade()
+                        .thumbnail(0.5f)
+                        .bitmapTransform(new CircleTransform(getApplicationContext()))
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(navProfileImage);
+
                 }
 
                 @Override

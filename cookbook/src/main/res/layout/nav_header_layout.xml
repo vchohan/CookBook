@@ -6,7 +6,8 @@
         android:background="@color/colorIndigo900"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <RelativeLayout
+    <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -20,33 +21,41 @@
 
             <ImageView
                     android:id="@+id/nav_profile_image"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:padding="@dimen/ten_density_pixel"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:gravity="center"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_person_white_24dp"
                     android:background="@drawable/border_view_circle_pink" />
 
             <TextView
                     android:id="@+id/nav_profile_username"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:text="username"
                     android:textColor="@color/colorWhite" />
 
         </LinearLayout>
 
-        <TextView
-                android:id="@+id/nav_logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Logout"
-                android:textColor="@color/colorWhite"
-                android:layout_marginEnd="22dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true" />
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="bottom">
 
-    </RelativeLayout>
+            <TextView
+                    android:id="@+id/nav_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/twenty_density_pixel"
+                    android:layout_gravity="right"
+                    android:text="Logout"
+                    android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
