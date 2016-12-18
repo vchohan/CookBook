@@ -1,6 +1,7 @@
 package com.vchohan.cookbook;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 public class AddNewRecipeActivity extends AppCompatActivity {
@@ -17,8 +18,11 @@ public class AddNewRecipeActivity extends AppCompatActivity {
 
     private void createAddNewRecipeFragment(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                .replace(R.id.new_recipe_fragment_container, AddNewRecipeFragment.newInstance(), AddNewRecipeFragment.TAG).commit();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.new_recipe_fragment_container,
+                AddNewRecipeFragment.newInstance(), AddNewRecipeFragment.TAG).commit();
         }
     }
 

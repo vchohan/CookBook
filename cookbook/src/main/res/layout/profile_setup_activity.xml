@@ -25,7 +25,6 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:padding="@dimen/ten_density_pixel"
                     android:src="@drawable/ic_person_white_24dp"
                     android:background="@drawable/border_view_circle_indigo" />
 

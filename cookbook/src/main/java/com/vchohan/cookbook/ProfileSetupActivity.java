@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -129,7 +131,19 @@ public class ProfileSetupActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
-                profileSetupImage.setImageURI(resultUri);
+                Glide.with(getApplicationContext()).load(resultUri)
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(profileSetupImage);
+
+                // Loading profile image
+                Glide.with(getApplicationContext()).load(resultUri)
+                    .crossFade()
+                    .thumbnail(0.5f)
+                    .bitmapTransform(new CircleTransform(getApplicationContext()))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(profileSetupImage);
+
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();

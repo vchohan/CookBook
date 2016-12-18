@@ -3,10 +3,10 @@
     <string name="app_name">Cook Book</string>
 
     <!--page title-->
-    <string name="user_registration_page_title">REGISTRATION PAGE</string>
-    <string name="user_profile_setup_page_title">PROFILE SETUP</string>
-    <string name="user_login_page_title">LOGIN</string>
-    <string name="add_new_recipe_page_title">ADD A NEW RECIPE</string>
+    <string name="user_registration_page_title">Registration Page</string>
+    <string name="user_profile_setup_page_title">Profile Setup</string>
+    <string name="user_login_page_title">Login</string>
+    <string name="add_new_recipe_page_title">Add New Recipe</string>
 
     <!--drawer strings-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
