@@ -1,6 +1,6 @@
 <resources>
     <!--app title-->
-    <string name="app_name">COOK BOOK</string>
+    <string name="app_name">Cook Book</string>
 
     <!--page title-->
     <string name="user_registration_page_title">REGISTRATION PAGE</string>
