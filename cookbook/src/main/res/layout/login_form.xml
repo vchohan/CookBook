@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:scrollbars="none"
-            tools:context="com.vchohan.cookbook.LoginActivity">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scrollbars="none"
+        tools:context="com.vchohan.cookbook.LoginActivity">
 
-    <RelativeLayout
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -18,7 +19,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
+        <!-- login app logo container -->
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_app_logo" />
+
+        </LinearLayout>
 
         <!-- login form -->
         <LinearLayout
@@ -27,21 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/twenty_density_pixel">
-
-            <!-- login image view container -->
-            <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="@dimen/ten_density_pixel"
-                        android:src="@drawable/cook_book"/>
-
-            </LinearLayout>
 
             <!-- login email container -->
             <LinearLayout
@@ -56,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/ten_density_pixel"
                         android:background="@color/colorIndigo300"
-                        android:src="@drawable/ic_email_white_24dp"/>
+                        android:src="@drawable/ic_email_white_24dp" />
 
                 <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                             android:layout_margin="@dimen/ten_density_pixel"
                             android:hint="@string/prompt_email"
                             android:inputType="textEmailAddress"
-                            android:imeOptions="actionNext"/>
+                            android:imeOptions="actionNext" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/ten_density_pixel"
                         android:background="@color/colorIndigo300"
-                        android:src="@drawable/ic_vpn_key_white_24dp"/>
+                        android:src="@drawable/ic_vpn_key_white_24dp" />
 
                 <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -104,7 +104,7 @@
                             android:layout_margin="@dimen/ten_density_pixel"
                             android:hint="@string/prompt_password"
                             android:inputType="text|textNoSuggestions|textPassword"
-                            android:imeOptions="actionGo"/>
+                            android:imeOptions="actionGo" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -122,16 +122,14 @@
                 <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:weightSum="1">
+                        android:layout_height="match_parent">
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/ten_density_pixel"
                             android:layout_gravity="center"
-                            android:text="Remember Me"/>
+                            android:text="Remember Me" />
 
                     <Switch
                             android:id="@+id/login_user_remember"
@@ -139,7 +137,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/ten_density_pixel"
                             android:layout_gravity="center"
-                            android:elevation="17dp"/>
+                            android:elevation="17dp" />
 
                     <Button
                             android:id="@+id/login_button"
@@ -149,7 +147,7 @@
                             android:background="@color/colorIndigo500"
                             android:elevation="24dp"
                             android:text="@string/action_login"
-                            android:textColor="@color/colorWhite"/>
+                            android:textColor="@color/colorWhite" />
 
                 </LinearLayout>
 
@@ -164,7 +162,7 @@
                     <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/register_text"/>
+                            android:text="@string/register_text" />
 
                     <TextView
                             android:id="@+id/login_register_button"
@@ -173,7 +171,7 @@
                             android:paddingLeft="@dimen/ten_density_pixel"
                             android:text="@string/action_register"
                             android:textStyle="bold"
-                            android:textColor="@color/colorIndigo500"/>
+                            android:textColor="@color/colorIndigo500" />
 
                 </LinearLayout>
 
@@ -188,7 +186,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/ten_density_pixel"
                             android:layout_gravity="center"
-                            android:text="@string/action_login_google"/>
+                            android:text="@string/action_login_google" />
 
                     <com.google.android.gms.common.SignInButton
                             android:id="@+id/google_sign_in_button"
@@ -196,7 +194,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/ten_density_pixel"
                             android:background="@color/colorIndigo500"
-                            android:elevation="2dp"/>
+                            android:elevation="2dp" />
 
                 </LinearLayout>
 
@@ -204,6 +202,6 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>

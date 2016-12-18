@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/splash_activity"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/twenty_density_pixel">
 
-    <ImageView
+    <!-- login form -->
+    <LinearLayout
+            android:id="@+id/splash_view"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/cook_book"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/twenty_density_pixel">
 
-</RelativeLayout>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_app_logo" />
+
+    </LinearLayout>
+
+    <!-- login progress bar -->
+    <ProgressBar
+            android:id="@+id/splash_progress_bar"
+            style="@android:style/Widget.DeviceDefault.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+</LinearLayout>
