@@ -126,7 +126,7 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Recipes");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
         mStorage = FirebaseStorage.getInstance().getReference();
 

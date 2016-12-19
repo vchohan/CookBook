@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth.addAuthStateListener(mAuthListener);
 
-        mDatabaseRecipes = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        mDatabaseRecipes = FirebaseDatabase.getInstance().getReference().child("Recipes");
         mDatabaseRecipes.keepSynced(true);
 
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navProfileUsername = (TextView) findViewById(R.id.nav_profile_username);
         navLogout = (TextView) findViewById(R.id.nav_logout);
 
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        mFab = (FloatingActionButton) findViewById(R.id.main_add_recipe_fab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         });
                     }
                 });
+                hideProgressDialog();
             }
         };
 
@@ -206,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                hideProgressDialog();
+
                 int friendlyMessageCount = firebaseRecyclerAdapter.getItemCount();
                 int lastVisiblePosition = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
                 // If the recycler view is initially being loaded or the

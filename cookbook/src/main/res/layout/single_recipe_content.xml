@@ -8,10 +8,94 @@
         android:layout_height="match_parent"
         tools:context="com.vchohan.cookbook.SingleRecipeActivity">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="@string/large_text" />
+    <!-- single recipe image view container-->
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <!-- single recipe image container-->
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="center">
+
+            <ImageView
+                    android:id="@+id/single_recipe_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"/>
+
+        </LinearLayout>
+
+        <!-- single recipe ingredients container-->
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/twenty_density_pixel">
+
+            <TextView
+                    android:id="@+id/single_recipe_ingredients_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/recipe_ingredients_header"
+                    android:textStyle="bold" />
+
+            <TextView
+                    android:id="@+id/single_recipe_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/ten_density_pixel" />
+
+        </LinearLayout>
+
+        <!-- single recipe method container-->
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/twenty_density_pixel">
+
+            <TextView
+                    android:id="@+id/single_recipe_method_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/recipe_method_header"
+                    android:textStyle="bold" />
+
+            <TextView
+                    android:id="@+id/single_recipe_method"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/ten_density_pixel" />
+
+        </LinearLayout>
+
+        <!-- single recipe notes container-->
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/twenty_density_pixel">
+
+            <TextView
+                    android:id="@+id/single_recipe_notes_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/recipe_notes_header"
+                    android:textStyle="bold" />
+
+            <TextView
+                    android:id="@+id/single_recipe_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/ten_density_pixel" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
