@@ -5,6 +5,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import android.app.ProgressDialog;
@@ -71,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DatabaseReference mDatabaseUsers;
 
+    private DatabaseReference mDatabaseCurrentUser;
+
+    private Query mQueryCurrentUser;
+
     private DatabaseReference mDatabaseLikes;
 
     private boolean mProcessLike = false;
@@ -100,13 +105,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
-        mAuth.addAuthStateListener(mAuthListener);
-
         mDatabaseRecipes = FirebaseDatabase.getInstance().getReference().child("Recipes");
         mDatabaseRecipes.keepSynced(true);
 
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseUsers.keepSynced(true);
+
+        String currentUserId = mAuth.getCurrentUser().getUid();
+
+        mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("Recipes");
+        mDatabaseCurrentUser.keepSynced(true);
+
+        mQueryCurrentUser = mDatabaseCurrentUser.orderByChild("uid").equalTo(currentUserId);
 
         mDatabaseLikes = FirebaseDatabase.getInstance().getReference().child("Likes");
         mDatabaseLikes.keepSynced(true);
@@ -148,8 +158,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setupFirebaseRecyclerView() {
         showProgressDialog();
+
+        mAuth.addAuthStateListener(mAuthListener);
+
+        // user mDatabaseRecipe for all users, else mQueryCurrentUser for logged in single user 
         final FirebaseRecyclerAdapter<RecipeUtils, MainRecipeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<RecipeUtils,
-            MainRecipeViewHolder>(RecipeUtils.class, R.layout.main_recipe_custom_card_view, MainRecipeViewHolder.class, mDatabaseRecipes) {
+            MainRecipeViewHolder>(RecipeUtils.class, R.layout.main_recipe_custom_card_view, MainRecipeViewHolder.class, mQueryCurrentUser) {
             @Override
             protected void populateViewHolder(MainRecipeViewHolder viewHolder, RecipeUtils model, int position) {
 

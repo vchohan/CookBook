@@ -8,7 +8,6 @@
         android:layout_height="match_parent"
         tools:context="com.vchohan.cookbook.SingleRecipeActivity">
 
-    <!-- single recipe image view container-->
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -26,73 +25,81 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:adjustViewBounds="true"/>
+                    android:adjustViewBounds="true" />
 
         </LinearLayout>
 
-        <!-- single recipe ingredients container-->
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="@dimen/twenty_density_pixel">
 
-            <TextView
-                    android:id="@+id/single_recipe_ingredients_header"
+            <!-- single recipe ingredients container-->
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/recipe_ingredients_header"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/ten_density_pixel">
 
-            <TextView
-                    android:id="@+id/single_recipe_ingredients"
+                <TextView
+                        android:id="@+id/single_recipe_ingredients_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/recipe_ingredients_header"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:id="@+id/single_recipe_ingredients"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/ten_density_pixel" />
+
+            </LinearLayout>
+
+            <!-- single recipe method container-->
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="@dimen/ten_density_pixel" />
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/ten_density_pixel">
 
-        </LinearLayout>
+                <TextView
+                        android:id="@+id/single_recipe_method_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/recipe_method_header"
+                        android:textStyle="bold" />
 
-        <!-- single recipe method container-->
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/twenty_density_pixel">
+                <TextView
+                        android:id="@+id/single_recipe_method"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/ten_density_pixel" />
 
-            <TextView
-                    android:id="@+id/single_recipe_method_header"
+            </LinearLayout>
+
+            <!-- single recipe notes container-->
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/recipe_method_header"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/ten_density_pixel">
 
-            <TextView
-                    android:id="@+id/single_recipe_method"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="@dimen/ten_density_pixel" />
+                <TextView
+                        android:id="@+id/single_recipe_notes_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/recipe_notes_header"
+                        android:textStyle="bold" />
 
-        </LinearLayout>
+                <TextView
+                        android:id="@+id/single_recipe_notes"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/ten_density_pixel" />
 
-        <!-- single recipe notes container-->
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/twenty_density_pixel">
-
-            <TextView
-                    android:id="@+id/single_recipe_notes_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/recipe_notes_header"
-                    android:textStyle="bold" />
-
-            <TextView
-                    android:id="@+id/single_recipe_notes"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="@dimen/ten_density_pixel" />
+            </LinearLayout>
 
         </LinearLayout>
 
