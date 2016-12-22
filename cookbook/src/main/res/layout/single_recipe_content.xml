@@ -13,22 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <!-- single recipe image container-->
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:gravity="center">
-
-            <ImageView
-                    android:id="@+id/single_recipe_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true" />
-
-        </LinearLayout>
-
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"

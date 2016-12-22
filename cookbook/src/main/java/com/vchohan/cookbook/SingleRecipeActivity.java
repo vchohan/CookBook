@@ -7,7 +7,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -34,6 +36,8 @@ public class SingleRecipeActivity extends AppCompatActivity {
 
     private String mRecipeKey = null;
 
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,7 @@ public class SingleRecipeActivity extends AppCompatActivity {
         singleRecipeNotes = (TextView) findViewById(R.id.single_recipe_notes);
 
         mDatabase.child(mRecipeKey).addValueEventListener(new ValueEventListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String recipeTitle = (String) dataSnapshot.child("title").getValue();
@@ -61,9 +66,10 @@ public class SingleRecipeActivity extends AppCompatActivity {
                 String recipeNotes = (String) dataSnapshot.child("notes").getValue();
                 String recipeUid = (String) dataSnapshot.child("uid").getValue();
 
-                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-                toolbar.setTitle(recipeTitle);
-                setSupportActionBar(toolbar);
+                mToolbar = (Toolbar) findViewById(R.id.toolbar);
+                mToolbar.setTitle(recipeTitle);
+                setSupportActionBar(mToolbar);
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
 
                 Glide.with(SingleRecipeActivity.this).load(recipeImage)
                     .crossFade()
