@@ -17,7 +17,7 @@
     <item
             android:id="@+id/action_profile"
             android:title="@string/action_profile"
-            app:actionLayout="@layout/profile_icon_view"
+            app:actionLayout="@layout/toolbar_profile_image_layout"
             app:showAsAction="ifRoom" />
 
 </menu>

@@ -44,11 +44,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private NavigationView mNavigationView;
 
+    private Toolbar mToolbar;
+
     private DrawerLayout mDrawerLayout;
 
-    private View mNavigationHeader;
-
-    private Toolbar mToolbar;
+    private View mNavigationHeaderView;
 
     private FloatingActionButton mFab;
 
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ProgressDialog mProgressDialog;
 
-    private ImageView navProfileImage;
+    private ImageView navProfileImage, toolbarProfileImage;
 
     private TextView navProfileUsername, navLogout;
 
@@ -136,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navProfileImage = (ImageView) findViewById(R.id.nav_profile_image);
         navProfileUsername = (TextView) findViewById(R.id.nav_profile_username);
         navLogout = (TextView) findViewById(R.id.nav_logout);
+
+        toolbarProfileImage = (ImageView) findViewById(R.id.toolbar_profile_image);
 
         mFab = (FloatingActionButton) findViewById(R.id.main_add_recipe_fab);
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -262,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setupToolBarAndNavigationDrawer() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        View profileIcon = getLayoutInflater().inflate(R.layout.profile_icon_view, null);
+//        View profileIcon = getLayoutInflater().inflate(R.layout.toolbar_profile_image_layout, null);
 //        mToolbar.addView(profileIcon);
 
         setSupportActionBar(mToolbar);
@@ -277,14 +279,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView.setNavigationItemSelectedListener(this);
 
         // Navigation view header
-        mNavigationHeader = mNavigationView.getHeaderView(0);
+        mNavigationHeaderView = mNavigationView.getHeaderView(0);
+
         if (mAuth.getCurrentUser() != null) {
             final String userId = mAuth.getCurrentUser().getUid();
 
             mDatabaseUsers.child(userId).child("username").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    navProfileUsername = (TextView) mNavigationHeader.findViewById(R.id.nav_profile_username);
+                    navProfileUsername = (TextView) mNavigationHeaderView.findViewById(R.id.nav_profile_username);
                     navProfileUsername.setText(dataSnapshot.getValue(String.class));
                 }
 
@@ -297,14 +300,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mDatabaseUsers.child(userId).child("image").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    navProfileImage = (ImageView) mNavigationHeader.findViewById(R.id.nav_profile_image);
+                    navProfileImage = (ImageView) mNavigationHeaderView.findViewById(R.id.nav_profile_image);
+                    toolbarProfileImage = (ImageView) mToolbar.findViewById(R.id.toolbar_profile_image);
+
                     String image = dataSnapshot.getValue(String.class);
+
+                    // loading nav profile image
                     Glide.with(getApplicationContext()).load(image)
                         .crossFade()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(navProfileImage);
 
-                    // Loading profile image
                     Glide.with(getApplicationContext()).load(image)
                         .crossFade()
                         .thumbnail(0.5f)
@@ -312,6 +318,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(navProfileImage);
 
+                    // Loading toolbar profile image
+                    Glide.with(getApplicationContext()).load(image)
+                        .asBitmap()
+                        .transform(new CircleTransform(getApplicationContext()))
+                        .skipMemoryCache(true)
+                        .into(toolbarProfileImage);
+
+//                    Glide.with(getApplicationContext()).load(image)
+//                        .crossFade()
+//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                        .into(toolbarProfileImage);
+
+                    Glide.with(getApplicationContext()).load(image)
+                        .crossFade()
+                        .thumbnail(0.5f)
+                        .bitmapTransform(new CircleTransform(getApplicationContext()))
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(toolbarProfileImage);
                 }
 
                 @Override
@@ -321,7 +345,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
         }
 
-        navLogout = (TextView) mNavigationHeader.findViewById(R.id.nav_logout);
+        navLogout = (TextView) mNavigationHeaderView.findViewById(R.id.nav_logout);
         navLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -386,6 +410,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        if (id == R.id.action_settings) {
 //            return true;
 //        }
+
+        if (id == R.id.action_profile) {
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
