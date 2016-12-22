@@ -9,16 +9,16 @@
 
     <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar"
-            android:fitsSystemWindows="true"
-            android:layout_height="@dimen/two_hundred_fifty_density_pixel"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/two_hundred_fifty_density_pixel"
+            android:fitsSystemWindows="true"
             android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
-                android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:contentScrim="?attr/colorPrimary">
 
@@ -31,8 +31,8 @@
 
             <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
-                    android:layout_height="?attr/actionBarSize"
                     android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -46,9 +46,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
+            android:visibility="gone"
             app:layout_anchor="@id/app_bar"
             app:layout_anchorGravity="bottom|end"
-            app:srcCompat="@android:drawable/ic_menu_edit"
-            android:visibility="gone" />
+            app:srcCompat="@android:drawable/ic_menu_edit" />
 
 </android.support.design.widget.CoordinatorLayout>
