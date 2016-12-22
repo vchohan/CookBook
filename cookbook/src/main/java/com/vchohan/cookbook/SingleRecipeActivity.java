@@ -69,7 +69,7 @@ public class SingleRecipeActivity extends AppCompatActivity {
                 mToolbar = (Toolbar) findViewById(R.id.toolbar);
                 mToolbar.setTitle(recipeTitle);
                 setSupportActionBar(mToolbar);
-                getSupportActionBar().setDisplayShowTitleEnabled(true);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
                 Glide.with(SingleRecipeActivity.this).load(recipeImage)
                     .crossFade()
