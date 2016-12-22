@@ -34,7 +34,6 @@ public class SingleRecipeActivity extends AppCompatActivity {
 
     private String mRecipeKey = null;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +51,6 @@ public class SingleRecipeActivity extends AppCompatActivity {
         singleRecipeMethod = (TextView) findViewById(R.id.single_recipe_method);
         singleRecipeNotes = (TextView) findViewById(R.id.single_recipe_notes);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         mDatabase.child(mRecipeKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -64,6 +60,10 @@ public class SingleRecipeActivity extends AppCompatActivity {
                 String recipeMethod = (String) dataSnapshot.child("method").getValue();
                 String recipeNotes = (String) dataSnapshot.child("notes").getValue();
                 String recipeUid = (String) dataSnapshot.child("uid").getValue();
+
+                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                toolbar.setTitle(recipeTitle);
+                setSupportActionBar(toolbar);
 
                 Glide.with(SingleRecipeActivity.this).load(recipeImage)
                     .crossFade()

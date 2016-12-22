@@ -87,8 +87,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="@dimen/ten_density_pixel"
                     android:padding="@dimen/ten_density_pixel"
-                    android:background="@drawable/border_view_rectangle"
-                    android:layout_weight="1">
+                    android:background="@drawable/border_view_rectangle">
 
                 <!-- recipe title container -->
                 <LinearLayout
@@ -115,9 +114,7 @@
                                 android:hint="Recipe Title"
                                 android:inputType="text|textCapCharacters|textCapWords"
                                 android:textStyle="bold"
-                                android:textAllCaps="true"
-                                android:maxLines="1"
-                                android:ems="10" />
+                                android:maxLines="1"/>
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -146,8 +143,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Recipe Ingredients"
-                                android:inputType="text|textMultiLine|textCapWords"
-                                android:ems="10" />
+                                android:inputType="text|textMultiLine|textCapWords"/>
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -176,7 +172,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Recipe Method"
-                                android:inputType="text|textMultiLine"
+                                android:inputType="text|textMultiLine|textCapSentences"
                                 android:ems="10" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -206,8 +202,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Recipe Notes"
-                                android:inputType="text|textMultiLine"
-                                android:ems="10" />
+                                android:inputType="text|textMultiLine|textCapSentences"
+                                android:imeOptions="actionGo"/>
 
                     </android.support.design.widget.TextInputLayout>
 

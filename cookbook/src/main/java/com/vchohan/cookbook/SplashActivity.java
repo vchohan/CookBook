@@ -1,5 +1,7 @@
 package com.vchohan.cookbook;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,9 +40,16 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startApp() {
-        Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
-        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(mainIntent);
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            //Go to login
+            Intent mainIntent = new Intent(getBaseContext(), LoginActivity.class);
+            mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(mainIntent);
+        } else {
+            Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
+            mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(mainIntent);
+        }
     }
 
     @Override
