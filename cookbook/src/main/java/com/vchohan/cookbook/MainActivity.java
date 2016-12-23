@@ -320,15 +320,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     // Loading toolbar profile image
                     Glide.with(getApplicationContext()).load(image)
-                        .asBitmap()
-                        .transform(new CircleTransform(getApplicationContext()))
-                        .skipMemoryCache(true)
+                        .crossFade()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(toolbarProfileImage);
-
-//                    Glide.with(getApplicationContext()).load(image)
-//                        .crossFade()
-//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                        .into(toolbarProfileImage);
 
                     Glide.with(getApplicationContext()).load(image)
                         .crossFade()
@@ -396,6 +390,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setBackgroundColor(getResources().getColor(R.color.colorIndigo900));
+//        EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+//        searchEditText.setTextColor(getResources().getColor(R.color.colorBlack));
+//        searchEditText.setHintTextColor(getResources().getColor(R.color.colorBlack));
 
         // Configure the search info and add any event listeners...
 
