@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        tools:context="com.vchohan.cookbook.AddNewRecipeFragment">
-
-    <!--recipe user input scroll view container-->
-    <ScrollView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:layout_above="@+id/recipe_save_button">
+            android:layout_gravity="center"
+            tools:context="com.vchohan.cookbook.AddNewRecipeFragment">
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <!--recipe user input container-->
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -37,17 +36,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"/>
 
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_menu_camera" />
+                        android:background="@drawable/ic_menu_camera"/>
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Click here to add an image." />
+                        android:text="Click here to add an image."/>
 
             </LinearLayout>
 
@@ -68,7 +67,7 @@
                         android:gravity="center"
                         android:text="@string/spinner_title"
                         android:textStyle="bold"
-                        android:textColor="@color/colorIndigo500" />
+                        android:textColor="@color/colorIndigo500"/>
 
                 <!-- Spinner Element -->
                 <Spinner
@@ -76,7 +75,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:prompt="@string/spinner_title" />
+                        android:prompt="@string/spinner_title"/>
 
             </LinearLayout>
 
@@ -100,7 +99,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/colorIndigo300"
-                            android:src="@drawable/ic_format_list_numbered_white_24dp" />
+                            android:src="@drawable/ic_format_list_numbered_white_24dp"/>
 
                     <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
@@ -131,7 +130,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/colorIndigo300"
-                            android:src="@drawable/ic_format_list_numbered_white_24dp" />
+                            android:src="@drawable/ic_format_list_numbered_white_24dp"/>
 
                     <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
@@ -160,7 +159,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/colorIndigo300"
-                            android:src="@drawable/ic_format_list_numbered_white_24dp" />
+                            android:src="@drawable/ic_format_list_numbered_white_24dp"/>
 
                     <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
@@ -173,7 +172,7 @@
                                 android:layout_height="wrap_content"
                                 android:hint="Recipe Method"
                                 android:inputType="text|textMultiLine|textCapSentences"
-                                android:ems="10" />
+                                android:ems="10"/>
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -190,7 +189,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/colorIndigo300"
-                            android:src="@drawable/ic_format_list_numbered_white_24dp" />
+                            android:src="@drawable/ic_format_list_numbered_white_24dp"/>
 
                     <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
@@ -213,26 +212,26 @@
 
         </LinearLayout>
 
-    </ScrollView>
-
-    <!-- recipe save button container -->
-    <LinearLayout
-            android:id="@+id/recipe_save_button"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
-
-        <Button
-                android:id="@+id/save_button"
+        <!-- recipe save button container -->
+        <LinearLayout
+                android:id="@+id/recipe_save_button"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="SAVE"
-                android:textColor="@color/colorWhite"
-                android:background="@color/colorIndigo500"
-                android:layout_alignParentBottom="true" />
+                android:layout_alignParentBottom="true">
+
+            <Button
+                    android:id="@+id/save_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="SAVE"
+                    android:textColor="@color/colorWhite"
+                    android:background="@color/colorIndigo500"
+                    android:layout_alignParentBottom="true"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</RelativeLayout>
+</ScrollView>
