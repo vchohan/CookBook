@@ -1,7 +1,5 @@
 package com.vchohan.cookbook;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
     private void setProgressBar() {
         for (int progress = 0; progress < 100; progress += 10) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(500);
                 mProgressView.setProgress(progress);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -40,16 +38,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startApp() {
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            //Go to login
-            Intent mainIntent = new Intent(getBaseContext(), LoginActivity.class);
-            mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(mainIntent);
-        } else {
-            Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
-            mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(mainIntent);
-        }
+        Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(mainIntent);
     }
 
     @Override
