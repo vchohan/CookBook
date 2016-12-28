@@ -421,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_profile) {
-            Intent setupIntent = new Intent(MainActivity.this, ProfileSetupActivity.class);
+            Intent setupIntent = new Intent(MainActivity.this, TabbedActivity.class);
             setupIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(setupIntent);
         }

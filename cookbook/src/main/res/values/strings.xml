@@ -27,7 +27,7 @@
     </string-array>
 
     <!--spinner category-->
-    <string name="spinner_title">Select a Meal Category: </string>
+    <string name="spinner_title">Select a Meal Category:</string>
     <string-array name="recipe_category_array">
         <item>BREAKFAST</item>
         <item>LUNCH</item>

@@ -46,4 +46,15 @@
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
 
+
+
+
+        <color name="colorPrimary">#125688</color>
+        <color name="colorPrimaryDark">#125688</color>
+        <color name="textColorPrimary">#FFFFFF</color>
+        <color name="windowBackground">#FFFFFF</color>
+        <color name="navigationBarColor">#000000</color>
+        <color name="colorAccent">#c8e8ff</color>
+
+
 </resources>
