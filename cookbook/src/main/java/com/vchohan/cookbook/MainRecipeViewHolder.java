@@ -14,7 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 /**
  * Created by vchohan on 12/16/16.
@@ -48,7 +48,7 @@ public class MainRecipeViewHolder extends RecyclerView.ViewHolder {
 
     public void setImage(Context context, String image) {
         ImageView recipeImage = (ImageView) mView.findViewById(R.id.recycler_recipe_image);
-        Picasso.with(context).load(image).into(recipeImage);
+        Glide.with(context).load(image).into(recipeImage);
     }
 
     public void setTitle(String title) {
