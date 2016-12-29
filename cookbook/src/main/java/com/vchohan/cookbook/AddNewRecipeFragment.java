@@ -15,17 +15,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -44,13 +40,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -79,17 +68,13 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
 
     private static Button recipeSaveButton;
 
-    private static final int REQUEST_CAMERA = 0;
+    private static final int CAMERA_REQUEST = 0;
 
-    private static final int SELECT_FILE = 0;
-
-    private static final int MY_REQUEST_CODE = 100;
+    private static final int GALLERY_REQUEST = 100;
 
     private String selectImageOptions;
 
     private Uri mImageUri = null;
-
-    private Bitmap mBitmap;
 
     private FirebaseAuth mAuth;
 
@@ -305,23 +290,23 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (getActivity().checkSelfPermission(Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_REQUEST_CODE);
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, GALLERY_REQUEST);
             }
         }
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, REQUEST_CAMERA);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 
     private void galleryIntent() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+        Intent galleryIntent = new Intent();
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, GALLERY_REQUEST);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == MY_REQUEST_CODE) {
+        if (requestCode == GALLERY_REQUEST) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Now user should be able to use camera
                 switch (requestCode) {
@@ -349,100 +334,15 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_FILE) {
-                onSelectFromGalleryResult(data);
-            } else if (requestCode == REQUEST_CAMERA) {
-                onCaptureImageResult(data);
+        if (requestCode == GALLERY_REQUEST || requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            if (data != null) {
+                try {
+                    mImageUri = data.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                recipeImage.setImageURI(mImageUri);
             }
         }
-    }
-
-    private void onSelectFromGalleryResult(Intent data) {
-
-        if (data != null) {
-            try {
-                mImageUri = data.getData();
-                mBitmap = decodeSampledBitmapFromUri(getActivity(), mImageUri);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            recipeImage.setImageBitmap(mBitmap);
-        }
-    }
-
-    public static Bitmap decodeSampledBitmapFromUri(Activity callingActivity, Uri uri) {
-        try {
-            InputStream input = callingActivity.getContentResolver().openInputStream(uri);
-
-            // First decode with inJustDecodeBounds=true to check dimensions
-            final BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            options.inSampleSize = 2; // make the bitmap size half of the original image.
-            BitmapFactory.decodeStream(input, null, options);
-
-            // Calculate inSampleSize
-            options.inSampleSize = calculateInSampleSize(options);
-            input.close();
-
-            // Decode bitmap with inSampleSize set
-            options.inJustDecodeBounds = false;
-
-            input = callingActivity.getContentResolver().openInputStream(uri);
-            Bitmap bitmap = BitmapFactory.decodeStream(input, null, options);
-            return bitmap;
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {// TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
-    public static int calculateInSampleSize(BitmapFactory.Options options) {
-        // Raw height and width of image
-        final int width = options.outWidth;
-        final int height = options.outHeight;
-
-        int inSampleSize = 1;
-
-//        if (height > regularHeight || width > regularWidth) {
-//
-//            final int halfHeight = height / 2;
-//            final int halfWidth = width / 2;
-//
-//            // Calculate the largest inSampleSize value that is a power of 2 and
-//            // keep both height and width larger than the requested height and width.
-//            while ((halfHeight / inSampleSize) > regularHeight
-//                && (halfWidth / inSampleSize) > regularWidth) {
-//                inSampleSize *= 2;
-//            }
-//        }
-        return inSampleSize;
-    }
-
-    private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
-        File destination = new File(Environment.getExternalStorageDirectory(),
-            System.currentTimeMillis() + ".jpg");
-        FileOutputStream fo;
-        try {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
-            fo.write(bytes.toByteArray());
-            fo.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        recipeImage.setImageBitmap(thumbnail);
     }
 }
