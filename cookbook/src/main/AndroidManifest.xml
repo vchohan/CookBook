@@ -55,6 +55,7 @@
         <activity
                 android:name=".TabbedActivity"
                 android:parentActivityName=".MainActivity"/>
+
         //this for cropping images in a circular shape
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"/>
     </application>
