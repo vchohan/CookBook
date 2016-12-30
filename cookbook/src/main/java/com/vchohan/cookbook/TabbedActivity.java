@@ -23,7 +23,7 @@ public class TabbedActivity extends AppCompatActivity {
     private int[] tabIcons = {
         R.drawable.ic_audiotrack,
         R.drawable.ic_person_white_24dp,
-        R.drawable.ic_favorite_border_pink_24dp
+        R.drawable.ic_favorite_white_24dp
     };
 
     @Override
@@ -52,9 +52,9 @@ public class TabbedActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "ONE");
-        adapter.addFragment(new TwoFragment(), "TWO");
-        adapter.addFragment(new ThreeFragment(), "THREE");
+        adapter.addFragment(new OneFragment(), "ALL RECIPES");
+        adapter.addFragment(new TwoFragment(), "MY RECIPES");
+        adapter.addFragment(new ThreeFragment(), "MY FAVORITES");
         viewPager.setAdapter(adapter);
     }
 
