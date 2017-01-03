@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout mDrawerLayout;
 
-    private View mNavigationHeaderView;
+    private View mNavigationHeaderView, mToolbarProfileView;
 
     private FloatingActionButton mFab;
 
@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // navigation view header
         mNavigationHeaderView = mNavigationView.getHeaderView(0);
 
-        final View actionLayout = mToolbar.getRootView();
+        mToolbarProfileView = mToolbar.getRootView();
 
         if (mAuth.getCurrentUser() != null) {
             final String userId = mAuth.getCurrentUser().getUid();
@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    toolbarProfileImage = (ImageView) actionLayout.findViewById(R.id.toolbar_profile_image);
+                    toolbarProfileImage = (ImageView) mToolbarProfileView.findViewById(R.id.toolbar_profile_image);
 
                     String profileImage = dataSnapshot.getValue(String.class);
 
