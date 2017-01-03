@@ -3,7 +3,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="@dimen/one_hundred_fifty_density_pixel"
-        android:background="@color/colorIndigo900"
+        android:background="@color/colorPink500"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <LinearLayout
