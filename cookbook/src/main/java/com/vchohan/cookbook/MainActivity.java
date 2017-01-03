@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() == null) {
+                if (mAuth.getCurrentUser() == null) {
                     Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                     loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
