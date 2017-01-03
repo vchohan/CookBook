@@ -267,16 +267,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String profileImage = dataSnapshot.getValue(String.class);
 
                     // Loading toolbar profile image
-                    Glide.with(getApplicationContext()).load(profileImage)
-                        .crossFade()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(toolbarProfileImage);
-
-                    Glide.with(getApplicationContext()).load(profileImage)
-                        .crossFade()
-                        .thumbnail(0.5f)
+                    Glide.with(getApplicationContext())
+                        .load(profileImage)
                         .bitmapTransform(new CircleTransform(getApplicationContext()))
+                        .crossFade()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .thumbnail(0.1f)
                         .into(toolbarProfileImage);
                 }
 
@@ -294,16 +290,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String image = dataSnapshot.getValue(String.class);
 
                     // loading nav profile image
-                    Glide.with(getApplicationContext()).load(image)
-                        .crossFade()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(navProfileImage);
-
-                    Glide.with(getApplicationContext()).load(image)
-                        .crossFade()
-                        .thumbnail(0.5f)
+                    Glide.with(getApplicationContext())
+                        .load(image)
                         .bitmapTransform(new CircleTransform(getApplicationContext()))
+                        .crossFade()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .thumbnail(0.5f)
                         .into(navProfileImage);
                 }
 
