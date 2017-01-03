@@ -50,6 +50,8 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
 
     public static final String TAG = AddNewRecipeFragment.class.getSimpleName();
 
+    private static final String URI = "uri";
+
     private static LinearLayout recipeImageViewContainer;
 
     private static ImageView recipeImage;
@@ -114,6 +116,11 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Recipes");
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
         mStorage = FirebaseStorage.getInstance().getReference();
+
+        if (savedInstanceState != null) {
+            mImageUri = savedInstanceState.getParcelable(URI);
+            recipeImage.setImageURI(mImageUri);
+        }
 
         return rootView;
     }
@@ -343,6 +350,13 @@ public class AddNewRecipeFragment extends Fragment implements AdapterView.OnItem
                 }
                 recipeImage.setImageURI(mImageUri);
             }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (recipeImage != null) {
+            outState.putParcelable(URI, mImageUri);
         }
     }
 }
