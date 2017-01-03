@@ -4,6 +4,7 @@
         android:id="@+id/recipe_card_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/two_hundred_density_pixel"
+        android:background="@color/colorBlueGrey100"
         card_view:cardCornerRadius="@dimen/five_density_pixel"
         card_view:cardMaxElevation="@dimen/five_density_pixel"
         card_view:cardElevation="@dimen/five_density_pixel"
@@ -29,8 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_menu_camera" />
+                    android:adjustViewBounds="true" />
 
         </LinearLayout>
 
