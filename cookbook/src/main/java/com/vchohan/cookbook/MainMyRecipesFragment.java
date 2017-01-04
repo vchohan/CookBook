@@ -10,11 +10,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,9 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
  * Created by waw069 on 12/28/16.
  */
 
-public class TwoFragment extends Fragment {
+public class MainMyRecipesFragment extends Fragment {
+
+    public static final String TAG = MainMyRecipesFragment.class.getSimpleName();
 
     private RecyclerView mRecipeRecyclerView;
 
@@ -49,7 +52,7 @@ public class TwoFragment extends Fragment {
 
     private ProgressDialog mProgressDialog;
 
-    public TwoFragment() {
+    public MainMyRecipesFragment() {
         // Required empty public constructor
     }
 
@@ -62,7 +65,7 @@ public class TwoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_one, container, false);
+        View rootView = inflater.inflate(R.layout.main_recipe_recycle_view, container, false);
 
         initializeFirebaseAuth();
         initializeFirebaseDatabase();
@@ -173,7 +176,7 @@ public class TwoFragment extends Fragment {
 
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
-
+                                Log.w(TAG, "getUser:onCancelled", databaseError.toException());
                             }
                         });
                     }

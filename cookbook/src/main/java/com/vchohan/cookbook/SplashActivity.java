@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startApp() {
-        Intent mainIntent = new Intent(getBaseContext(), TabbedActivity.class);
+        Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(mainIntent);
     }

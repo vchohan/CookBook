@@ -24,7 +24,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
  * Created by waw069 on 12/28/16.
  */
 
-public class OneFragment extends Fragment {
+public class MainAllRecipesFragment extends Fragment {
 
     private RecyclerView mRecipeRecyclerView;
 
@@ -44,7 +44,7 @@ public class OneFragment extends Fragment {
 
     private ProgressDialog mProgressDialog;
 
-    public OneFragment() {
+    public MainAllRecipesFragment() {
         // Required empty public constructor
     }
 
@@ -57,7 +57,7 @@ public class OneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_one, container, false);
+        View rootView = inflater.inflate(R.layout.main_recipe_recycle_view, container, false);
 
         initializeFirebaseAuth();
         initializeFirebaseDatabase();
