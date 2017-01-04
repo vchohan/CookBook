@@ -86,9 +86,7 @@ public class TabbedActivity extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.main_activity);
 
         setupRecipeTipsCardView();
-
         initializeFirebase();
-
         setupToolBarAndNavigationDrawer();
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
