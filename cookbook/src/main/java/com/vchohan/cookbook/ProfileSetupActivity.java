@@ -78,7 +78,6 @@ public class ProfileSetupActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private void submitProfileSetupAccount() {

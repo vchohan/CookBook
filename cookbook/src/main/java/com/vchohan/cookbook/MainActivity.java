@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        setupRecipeTipsCardView();
         initializeFirebase();
+        setupRecipeTipsCardView();
         setupToolBarAndNavigationDrawer();
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -217,29 +217,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (mAuth.getCurrentUser() != null) {
             final String userId = mAuth.getCurrentUser().getUid();
 
-//            mDatabaseUsers.child(userId).child("image").addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                    toolbarProfileImage = (ImageView) mToolbarProfileView.findViewById(R.id.toolbar_profile_image);
-//
-//                    String profileImage = dataSnapshot.getValue(String.class);
-//
-//                    // Loading toolbar profile image
-//                    Glide.with(getApplicationContext())
-//                        .load(profileImage)
-//                        .bitmapTransform(new CircleTransform(getApplicationContext()))
-//                        .crossFade()
-//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                        .thumbnail(0.1f)
-//                        .into(toolbarProfileImage);
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
+            mDatabaseUsers.child(userId).child("image").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    toolbarProfileImage = (ImageView) mToolbarProfileView.findViewById(R.id.toolbar_profile_image);
+
+                    String profileImage = dataSnapshot.getValue(String.class);
+
+                    // Loading toolbar profile image
+                    Glide.with(getApplicationContext())
+                        .load(profileImage)
+                        .bitmapTransform(new CircleTransform(getApplicationContext()))
+                        .crossFade()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .thumbnail(0.1f)
+                        .into(toolbarProfileImage);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 
             mDatabaseUsers.child(userId).child("image").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_profile) {
-            Intent setupIntent = new Intent(MainActivity.this, MainActivity.class);
+            Intent setupIntent = new Intent(MainActivity.this, ProfileSetupActivity.class);
             setupIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(setupIntent);
         }

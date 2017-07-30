@@ -21,10 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-
-/**
- * Created by waw069 on 12/28/16.
- */
+import com.vchohan.cookbook.login.LoginActivity;
 
 public class MainMyRecipesFragment extends Fragment {
 

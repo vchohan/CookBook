@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".LoginActivity"
+                android:name=".login.LoginActivity"
                 android:label="@string/user_login_page_title"/>
 
         <activity
@@ -37,7 +37,7 @@
         <activity
                 android:name=".RegisterActivity"
                 android:label="@string/user_registration_page_title"
-                android:parentActivityName=".LoginActivity"/>
+                android:parentActivityName=".login.LoginActivity"/>
         <activity
                 android:name=".ProfileSetupActivity"
                 android:label="@string/user_profile_setup_page_title"
